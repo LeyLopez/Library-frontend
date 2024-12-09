@@ -18,13 +18,13 @@ export const Header = () => {
         >
           <img
             className="bi me-2"
-            width="40"
-            height="32"
+            width="60"
+            height="48"
             src="./libros.png"
           ></img>
-          <span className="fs-4" style={{color : "#fff"}}>
+          <h1 className="fs-2" style={{color : "#fff"}}>
             Sistemas de Reservas y Préstamos de Bibliotecas
-          </span>
+          </h1>
         </a>
       </header>
     </div>
