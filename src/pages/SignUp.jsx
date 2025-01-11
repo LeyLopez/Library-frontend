@@ -110,18 +110,7 @@ export const SignUp = () => {
               required
             />
           </div>
-          <div className="col-md-4">
-            <label className="form-label">Teléfono</label>
-            <input
-              type="tel"
-              className="form-control"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="col-md-4">
+          <div className="col-md-6">
             <label className="form-label">Dirección</label>
             <input
               type="text"
@@ -132,13 +121,24 @@ export const SignUp = () => {
               required
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-6">
             <label className="form-label">Fecha de nacimiento</label>
             <input
               type="date"
               className="form-control"
               name="birdthday"
               value={formData.birdthday}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="col-md-4">
+            <label className="form-label">Teléfono</label>
+            <input
+              type="tel"
+              className="form-control"
+              name="phone"
+              value={formData.phone}
               onChange={handleInputChange}
               required
             />
