@@ -42,7 +42,7 @@ export const Login = () => {
                 color: "#fff",
                 border: "none",
               }}
-              onClick={()=> navigate('/home')}
+              onClick={()=> navigate('/clienthome')}
             >
               Ingresar
             </button>
