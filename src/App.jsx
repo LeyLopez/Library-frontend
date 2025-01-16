@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import './App.css'
 import { Header } from './components/Header'
 import { Login } from './pages/Login'
@@ -7,6 +9,9 @@ import { ClientHome } from './pages/ClientHome'
 import { RecoverPassword } from './pages/RecoverPassword'
 import { ClientData } from './pages/client/ClientData'
 import { RecoverPasswordAuth } from './pages/RecoverPasswordAuth'
+import { ClientLoans } from './pages/client/ClientLoans'
+import { ClientReservations } from './pages/client/ClientReservations'
+import { DeleteAccount } from './pages/client/DeleteAccount'
 
 function App() {
   return (
@@ -19,6 +24,9 @@ function App() {
             <Route path='/recoverpassword' element={<RecoverPassword></RecoverPassword>}></Route>
             <Route path='/clientdata' element={<ClientData></ClientData>}></Route>
             <Route path='/recoverpasswordauth' element={<RecoverPasswordAuth></RecoverPasswordAuth>}></Route>
+            <Route path='/myloans' element={<ClientLoans></ClientLoans>}></Route>
+            <Route path='/myreservations' element={<ClientReservations></ClientReservations>}></Route>
+            <Route path='/deletemyaccount' element={<DeleteAccount></DeleteAccount>}></Route>
         </Routes>
     </BrowserRouter>
   )
