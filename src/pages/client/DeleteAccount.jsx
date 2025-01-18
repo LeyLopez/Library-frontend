@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { OptionsButton } from "../../components/OptionsButton";
 
 export const DeleteAccountConfirmationModal = ({
   isOpen,
@@ -44,7 +45,7 @@ export const DeleteAccount = () => {
       }}
     >
       <div className="col-md-9">
-        <h2 className="h3 mb-3">Eliminar cuenta</h2>
+        <OptionsButton title={"Eliminar cuenta"}></OptionsButton>
         <form className="row g-3" style={{ position: "relative" }}>
           <div className="col-md-5">
             <label className="form-label" style={{ width: "100%" }}>

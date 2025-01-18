@@ -1,4 +1,5 @@
 import React from "react";
+import { OptionsButton } from "../../components/OptionsButton";
 
 export const ClientLoans = () => {
   return (
@@ -10,7 +11,7 @@ export const ClientLoans = () => {
       marginLeft: "10%"
     }}>
       <div className="col-md-9">
-        <h2 className="h3 mb-3">Mis préstamos</h2>
+        <OptionsButton title={"Mis préstamos"}></OptionsButton>
         <br />
         <div
           className="container"

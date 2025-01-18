@@ -1,4 +1,5 @@
 import React from "react";
+import { OptionsButton } from "../../components/OptionsButton";
 
 export const ClientData = () => {
   return (
@@ -12,7 +13,7 @@ export const ClientData = () => {
       }}
     >
       <div className="col-md-9">
-        <h2 className="h3 mb-3">Mis datos</h2>
+        <OptionsButton title={"Mis datos"}></OptionsButton>
         <form className="row g-3">
           <div className="col-md-5">
             <label className="form-label">Nombre</label>

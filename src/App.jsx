@@ -12,6 +12,10 @@ import { RecoverPasswordAuth } from './pages/RecoverPasswordAuth'
 import { ClientLoans } from './pages/client/ClientLoans'
 import { ClientReservations } from './pages/client/ClientReservations'
 import { DeleteAccount } from './pages/client/DeleteAccount'
+import { BookList } from './pages/admin/BookListAdminHome';
+import { AddBook } from './pages/admin/AddBook';
+import { DeleteBook } from './pages/admin/DeleteBook';
+import { UpdateBook } from './pages/admin/UpdateBook';
 
 function App() {
   return (
@@ -27,6 +31,10 @@ function App() {
             <Route path='/myloans' element={<ClientLoans></ClientLoans>}></Route>
             <Route path='/myreservations' element={<ClientReservations></ClientReservations>}></Route>
             <Route path='/deletemyaccount' element={<DeleteAccount></DeleteAccount>}></Route>
+            <Route path='/booklist' element={<BookList></BookList>}></Route>
+            <Route path='/addbook' element={<AddBook></AddBook>}></Route>
+            <Route path='/deletebook' element={<DeleteBook></DeleteBook>}></Route>
+            <Route path='/updatebook' element={<UpdateBook></UpdateBook>}></Route>
         </Routes>
     </BrowserRouter>
   )
