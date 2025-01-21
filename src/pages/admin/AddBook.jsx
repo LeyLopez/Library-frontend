@@ -1,4 +1,5 @@
 import React from 'react'
+import { OptionsButton } from '../../components/OptionsButton'
 
 export const AddBook = () => {
   return (
@@ -13,7 +14,7 @@ export const AddBook = () => {
       }}
     >
       <div className="col-md-9">
-        <h2 className="h3 mb-3">Agregar libro a la biblioteca</h2>
+      <OptionsButton title={"Agregar libro a la biblioteca"}></OptionsButton>
         <form className="row g-3" style={{ position: "relative" }}>
           <div className="col-md-5">
             <label className="form-label" style={{ width: "100%" }}>

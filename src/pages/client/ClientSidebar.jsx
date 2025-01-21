@@ -2,10 +2,11 @@ import React from "react";
 
 export const ClientSidebar = () => {
   return (
-    <div >
+    <div style={{position: "relative", alignItems: "left", width: "90%", boxSizing:"content-box"}}>
+      
       <div
         className="d-flex flex-column flex-shrink-0 p-3"
-        style={{width: "20%", backgroundColor: "#ffff"}}
+        style={{position:"relative", width: "20%", backgroundColor: "#ffff"}}
       >
 
         <ul className="nav nav-pills flex-column mb-auto">
