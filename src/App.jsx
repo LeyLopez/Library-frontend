@@ -16,13 +16,15 @@ import { BookList } from './pages/admin/BookListAdminHome';
 import { AddBook } from './pages/admin/AddBook';
 import { DeleteBook } from './pages/admin/DeleteBook';
 import { UpdateBook } from './pages/admin/UpdateBook';
+import { ClientNotification } from './pages/client/ClientNotification';
+import { BookDetails } from './pages/client/BookDetailsClient';
 
 function App() {
   return (
     <BrowserRouter>
         <Header></Header>
         <Routes>
-            <Route path='/' element = {<Login></Login>}></Route>
+            <Route path='/login' element = {<Login></Login>}></Route>
             <Route path='/signup' element={<SignUp></SignUp>}></Route>
             <Route path='/clienthome' element={<ClientHome></ClientHome>}></Route>
             <Route path='/recoverpassword' element={<RecoverPassword></RecoverPassword>}></Route>
@@ -35,6 +37,8 @@ function App() {
             <Route path='/addbook' element={<AddBook></AddBook>}></Route>
             <Route path='/deletebook' element={<DeleteBook></DeleteBook>}></Route>
             <Route path='/updatebook' element={<UpdateBook></UpdateBook>}></Route>
+            <Route path='/clientnotifications' element={<ClientNotification></ClientNotification>}></Route>
+            <Route path='/clientbookdetails' element={<BookDetails></BookDetails>}></Route>
         </Routes>
     </BrowserRouter>
   )

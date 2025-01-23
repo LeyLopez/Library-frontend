@@ -32,7 +32,7 @@ export const RecoverPassword = () => {
                 color: "#fff",
                 border: "none",
               }}
-              onClick={()=> navigate('/')}
+              onClick={()=> navigate('/login')}
             >
               Restaurar
             </button>

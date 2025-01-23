@@ -16,7 +16,7 @@ export const Navbar = () => {
                     width="16"
                     height="16"
                     fill="currentColor"
-                    class="bi bi-list"
+                    className="bi bi-list"
                     viewBox="0 0 16 16"
                   >
                     <path
@@ -48,10 +48,10 @@ export const Navbar = () => {
             </form>
             <ul className="navbar-nav px-5">
               <li className="nav-item">
-                <button type="button" class="btn position-relative">
+                <button type="button" className="btn position-relative" onClick={() => navigate("/clientnotifications")}>
                   Notificaciones
-                  <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-                    <span class="visually-hidden">New alerts</span>
+                  <span className="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                    <span className="visually-hidden">New alerts</span>
                   </span>
                 </button>
               </li>

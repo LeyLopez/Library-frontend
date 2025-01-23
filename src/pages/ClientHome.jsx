@@ -2,8 +2,12 @@ import React from "react";
 import { Navbar } from "../components/Navbar";
 import { SortBookBy } from "../components/SortBookBy";
 import { ClientSidebar } from "./client/ClientSidebar";
+import { useNavigate } from "react-router-dom";
 
 export const ClientHome = () => {
+
+  const navigate = useNavigate();
+
   // Lista de libros
   const books = [
     {
@@ -71,6 +75,7 @@ export const ClientHome = () => {
                       backgroundColor: "#14AE5C",
                       color: "white",
                     }}
+                    onClick={()=>navigate("/clientbookdetails")}
                   >
                     Detalles
                   </button>
