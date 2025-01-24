@@ -1,6 +1,7 @@
 import React from "react";
 import { Navbar } from "../../components/Navbar";
 import { SortBookBy } from "../../components/SortBookBy";
+import { AdminSidebar } from "./AdminSidebar";
 
 export const BookList = () => {
   const books = [
@@ -37,6 +38,7 @@ export const BookList = () => {
     <>
       <Navbar />
       <SortBookBy />
+      <AdminSidebar></AdminSidebar>
       <div
         className="d-flex justify-content-center py-5"
         style={{
@@ -45,6 +47,7 @@ export const BookList = () => {
           marginLeft: "5%",
         }}
       >
+        
         <div className="col-md-9">
           <h2 className="h3 mb-3">Lista de libros disponibles</h2>
           <div

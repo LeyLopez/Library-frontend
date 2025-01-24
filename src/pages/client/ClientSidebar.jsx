@@ -34,7 +34,38 @@ export const ClientSidebar = () => {
               Mis reservas
             </a>
           </li>
-          
+          <li>
+            <a href="#" className="nav-link link-body-emphasis">
+              <svg className="bi pe-none me-2" width="16" height="16">
+                
+              </svg>
+              Mis datos
+            </a>
+          </li>
+          <li>
+            <a href="#" className="nav-link link-body-emphasis">
+              <svg className="bi pe-none me-2" width="16" height="16">
+                
+              </svg>
+              Cambiar contraseña
+            </a>
+          </li>
+          <li>
+            <a href="#" className="nav-link link-body-emphasis">
+              <svg className="bi pe-none me-2" width="16" height="16">
+                
+              </svg>
+              Eliminar cuenta
+            </a>
+          </li>
+          <li>
+            <a href="#" className="nav-link link-body-emphasis">
+              <svg className="bi pe-none me-2" width="16" height="16">
+                
+              </svg>
+              Cerrar sesión
+            </a>
+          </li>
         </ul>
         <hr />
         <div className="dropdown">
@@ -51,33 +82,9 @@ export const ClientSidebar = () => {
               height="32"
               className="rounded-circle me-2"
             />
-            <strong>mdo</strong>
+            <strong>Client</strong>
           </a>
-          <ul className="dropdown-menu text-small shadow" style={{}}>
-            <li>
-              <a className="dropdown-item" href="#">
-                Mis datos
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item" href="#">
-                Cambiar contraseña
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item" href="#">
-                Eliminar cuenta
-              </a>
-            </li>
-            <li>
-              <hr className="dropdown-divider" />
-            </li>
-            <li>
-              <a className="dropdown-item" href="#">
-                Cerrar sesión
-              </a>
-            </li>
-          </ul>
+          
         </div>
       </div>
     </div>
