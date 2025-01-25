@@ -52,6 +52,7 @@ export const ClientHome = () => {
             maxWidth: "70%",
             marginTop: "2%",
             display: "block",
+            top:"150px"
           }}
         >
           {books.map((book) => (

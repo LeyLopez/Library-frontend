@@ -73,7 +73,8 @@ export const SignUp = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center pt-5">
+    <div className="body-content" style={{top: "50px"}}>
+    <div className="d-flex justify-content-center pt-5" >
       <div className="col-md-6">
         <h1 className="h3 mb-3 fw-normal">Registro</h1>
         <form className="row g-3" onSubmit={handleSubmit}>
@@ -223,6 +224,7 @@ export const SignUp = () => {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 };

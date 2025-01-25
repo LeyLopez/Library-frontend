@@ -4,11 +4,16 @@ import "/libros.png";
 export const Header = () => {
   return (
     <div
-      className="d-flex flex-wrap justify-content-center w-full  py-5"
+      className="d-flex flex-wrap justify-content-center  py-5"
       style={{
+        position:"fixed",
+        width: "100%",
+        height: "150px",    
         backgroundColor: "#3DDC44",
         textAlign: "center",
         color: "#fff",
+        display: "flex",
+        zIndex: "1000",
       }}
     >
       <header className="">

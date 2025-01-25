@@ -18,11 +18,13 @@ import { DeleteBook } from "./pages/admin/DeleteBook";
 import { UpdateBook } from "./pages/admin/UpdateBook";
 import { ClientNotification } from "./pages/client/ClientNotification";
 import { BookDetails } from "./pages/client/BookDetailsClient";
+import { ClientSidebar } from "./pages/client/ClientSidebar";
 
 function App() {
   return (
     <BrowserRouter>
       <Header></Header>
+      <ClientSidebar></ClientSidebar>
       <Routes>
         <Route path="/" element={<Login></Login>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>

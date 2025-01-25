@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export const Navbar = () => {
   const navigate = useNavigate();
   return (
-    <>
+    <div style={{position:"relative", top:"150px"}}>
       <nav className="navbar navbar-expand" aria-label="Second navbar example">
         <div className="container">
           <div className="collapse navbar-collapse">
@@ -59,6 +59,6 @@ export const Navbar = () => {
           </div>
         </div>
       </nav>
-    </>
+    </div>
   );
 };

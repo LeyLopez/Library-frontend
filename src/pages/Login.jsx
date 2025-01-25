@@ -7,7 +7,8 @@ export const Login = () => {
 
 
   return (
-    <div className="container">
+    <div className="body-content">
+      <div className="container">
       <div className="d-flex justify-content-center pt-5">
         <div className="col-md-3">
           <form>
@@ -61,6 +62,7 @@ export const Login = () => {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 };

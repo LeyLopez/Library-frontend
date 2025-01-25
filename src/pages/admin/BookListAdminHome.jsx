@@ -38,13 +38,14 @@ export const BookList = () => {
     <>
       <Navbar />
       <SortBookBy />
-      <AdminSidebar></AdminSidebar>
       <div
         className="d-flex justify-content-center py-5"
         style={{
           position: "relative",
           width: "90%",
-          marginLeft: "5%",
+          marginLeft: "10%",
+
+          top:"150px"
         }}
       >
         

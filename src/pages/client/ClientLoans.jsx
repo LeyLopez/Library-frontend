@@ -37,6 +37,7 @@ export const ClientLoans = () => {
         width: "90%",
         marginBottom: "10%",
         marginLeft: "10%",
+        top:"150px"
       }}
     >
       <div className="col-md-9">

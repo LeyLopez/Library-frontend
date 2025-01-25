@@ -15,13 +15,15 @@ export const BookDetails = () => {
   }
 
   return (
-    <div
+    <div className="container">
+      <div
       className="d-flex justify-content-center py-5"
       style={{
         position: "relative",
         width: "90%",
         marginBottom: "20%",
         marginLeft: "10%",
+        
       }}
     >
       <div className="col-md-9">
@@ -33,7 +35,7 @@ export const BookDetails = () => {
             position: "relative",
             maxWidth: "70%",
             marginTop: "2%",
-            display: "block",
+            
           }}
         >
           <div className="card mb-3" style={{maxWidth: "100%"}}>
@@ -86,6 +88,7 @@ export const BookDetails = () => {
         </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from 'react'
 
 export const SortBookBy = () => {
   return (
-    <div>
+    <div style={{ position: "relative", width: "90%", marginLeft: "20%", top: "150px", zIndex:"5" }}> 
       <div className="btn-group">
         <p
           style={{
@@ -12,7 +12,7 @@ export const SortBookBy = () => {
             paddingLeft: 12,
             paddingRight: 12,
             paddingBottom: 6,
-            paddingTop: 6,
+            paddingTop: 6
           }}
         >
           Ordenar por

@@ -8,6 +8,7 @@ export const RecoverPassword = () => {
   };
 
   return (
+    <div className="body-content">
     <div className="container">
       <div className="d-flex justify-content-center pt-5">
         <div className="col-md-3">
@@ -39,6 +40,7 @@ export const RecoverPassword = () => {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 }
