@@ -2,8 +2,12 @@ import React from "react";
 import { Navbar } from "../../components/Navbar";
 import { SortBookBy } from "../../components/SortBookBy";
 import { AdminSidebar } from "./AdminSidebar";
+import { useNavigate } from "react-router-dom";
 
 export const BookList = () => {
+
+  const navigate = useNavigate();
+
   const books = [
     {
       id: 1,
@@ -91,9 +95,11 @@ export const BookList = () => {
                         backgroundColor: "#14AE5C",
                         color: "white",
                         width: "100%",
+                        
                       }}
+                      onClick={() => navigate("/adminbookdetails")}
                     >
-                      Detalles
+                      Detalles 
                     </button>
                   </div>
                 </div>

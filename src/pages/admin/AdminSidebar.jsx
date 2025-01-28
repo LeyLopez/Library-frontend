@@ -1,8 +1,20 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const AdminSidebar = () => {
+
+  const navigate = useNavigate();
+
   return (
-    <div >
+    <div className="container"
+    style={{
+      position: "fixed",
+      alignItems: "left",
+      width: "90%",
+      height:"100%",
+      boxSizing: "content-box",
+      top: "200px",
+    }}>
       <div
         className="d-flex flex-column flex-shrink-0 p-3"
         style={{width: "20%", backgroundColor: "#ffff"}}
@@ -10,7 +22,7 @@ export const AdminSidebar = () => {
 
         <ul className="nav nav-pills flex-column mb-auto">
           <li className="nav-item">
-            <a href="#" className="nav-link active" aria-current="page" style={{backgroundColor: "#3DDC44"}}>
+            <a href="#" className="nav-link active" aria-current="page" style={{backgroundColor: "#3DDC44"}} onClick={() => navigate("/booklist")}>
               <svg className="bi pe-none me-2" width="16" height="16">
                 
               </svg>
@@ -18,7 +30,7 @@ export const AdminSidebar = () => {
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link link-body-emphasis">
+            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/addbook")}>
               <svg className="bi pe-none me-2" width="16" height="16">
                 
               </svg>
@@ -26,7 +38,7 @@ export const AdminSidebar = () => {
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link link-body-emphasis">
+            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/updatebook")}>
               <svg className="bi pe-none me-2" width="16" height="16">
                 
               </svg>
@@ -34,7 +46,7 @@ export const AdminSidebar = () => {
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link link-body-emphasis">
+            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/deletebook")}>
               <svg className="bi pe-none me-2" width="16" height="16">
                 
               </svg>
@@ -42,7 +54,7 @@ export const AdminSidebar = () => {
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link link-body-emphasis">
+            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/recoverpasswordauth")}>
               <svg className="bi pe-none me-2" width="16" height="16">
                 
               </svg>

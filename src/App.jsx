@@ -19,12 +19,14 @@ import { UpdateBook } from "./pages/admin/UpdateBook";
 import { ClientNotification } from "./pages/client/ClientNotification";
 import { BookDetails } from "./pages/client/BookDetailsClient";
 import { ClientSidebar } from "./pages/client/ClientSidebar";
+import { AdminSidebar } from "./pages/admin/AdminSidebar";
+import { BookDetailsAdmin } from "./pages/admin/BookDetailsAdmin";
 
 function App() {
   return (
     <BrowserRouter>
       <Header></Header>
-      <ClientSidebar></ClientSidebar>
+      <AdminSidebar></AdminSidebar>
       <Routes>
         <Route path="/" element={<Login></Login>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
@@ -59,6 +61,7 @@ function App() {
           path="/clientbookdetails"
           element={<BookDetails></BookDetails>}
         ></Route>
+        <Route path="/adminbookdetails" element={<BookDetailsAdmin></BookDetailsAdmin>}></Route>
       </Routes>
     </BrowserRouter>
   );

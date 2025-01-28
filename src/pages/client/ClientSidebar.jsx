@@ -1,6 +1,11 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const ClientSidebar = () => {
+
+  const navigate = useNavigate();
+  
+
   return (
     <div
       className="container"
@@ -24,43 +29,44 @@ export const ClientSidebar = () => {
               className="nav-link active"
               aria-current="page"
               style={{ backgroundColor: "#3DDC44" }}
+              onClick={() => navigate("/clienthome")}
             >
               <svg className="bi pe-none me-2" width="16" height="16"></svg>
               Inicio
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link link-body-emphasis">
+            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/myloans")}>
               <svg className="bi pe-none me-2" width="16" height="16"></svg>
               Mis préstamos
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link link-body-emphasis">
+            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/myreservations")}>
               <svg className="bi pe-none me-2" width="16" height="16"></svg>
               Mis reservas
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link link-body-emphasis">
+            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/clientdata")}>
               <svg className="bi pe-none me-2" width="16" height="16"></svg>
               Mis datos
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link link-body-emphasis">
+            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/recoverpasswordauth")}>
               <svg className="bi pe-none me-2" width="16" height="16"></svg>
               Cambiar contraseña
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link link-body-emphasis">
+            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/deletemyaccount")}>
               <svg className="bi pe-none me-2" width="16" height="16"></svg>
               Eliminar cuenta
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link link-body-emphasis">
+            <a href="#" className="nav-link link-body-emphasis" >
               <svg className="bi pe-none me-2" width="16" height="16"></svg>
               Cerrar sesión
             </a>

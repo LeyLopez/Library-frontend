@@ -23,7 +23,7 @@ export const BookDetails = () => {
         width: "90%",
         marginBottom: "20%",
         marginLeft: "10%",
-        
+        top:"150px"
       }}
     >
       <div className="col-md-9">
