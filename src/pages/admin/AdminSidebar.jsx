@@ -1,74 +1,52 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const AdminSidebar = () => {
-
   const navigate = useNavigate();
+  const location = useLocation();
+
+  
+  const menuItems = [
+    { path: "/booklist", label: "Inicio" },
+    { path: "/addbook", label: "Agregar libro" },
+    { path: "/deletebook", label: "Eliminar libro" },
+    { path: "/updatebook", label: "Modificar libro" },
+    { path: "/recoverpasswordauth", label: "Cambiar contraseña" },
+    { path: "/login", label: "Cerrar sesión" },
+  ];
 
   return (
-    <div className="container"
-    style={{
-      position: "fixed",
-      alignItems: "left",
-      width: "90%",
-      height:"100%",
-      boxSizing: "content-box",
-      top: "200px",
-    }}>
+    <div
+      className="container"
+      style={{
+        position: "fixed",
+        width: "90%",
+        height: "100%",
+        boxSizing: "content-box",
+        top: "200px",
+      }}
+    >
       <div
         className="d-flex flex-column flex-shrink-0 p-3"
-        style={{width: "20%", backgroundColor: "#ffff"}}
+        style={{ width: "20%", backgroundColor: "#ffff" }}
       >
-
         <ul className="nav nav-pills flex-column mb-auto">
-          <li className="nav-item">
-            <a href="#" className="nav-link active" aria-current="page" style={{backgroundColor: "#3DDC44"}} onClick={() => navigate("/booklist")}>
-              <svg className="bi pe-none me-2" width="16" height="16">
-                
-              </svg>
-              Inicio
-            </a>
-          </li>
-          <li>
-            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/addbook")}>
-              <svg className="bi pe-none me-2" width="16" height="16">
-                
-              </svg>
-              Agregar libro
-            </a>
-          </li>
-          <li>
-            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/updatebook")}>
-              <svg className="bi pe-none me-2" width="16" height="16">
-                
-              </svg>
-              Modificar libro
-            </a>
-          </li>
-          <li>
-            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/deletebook")}>
-              <svg className="bi pe-none me-2" width="16" height="16">
-                
-              </svg>
-              Eliminar libro
-            </a>
-          </li>
-          <li>
-            <a href="#" className="nav-link link-body-emphasis" onClick={() => navigate("/recoverpasswordauth")}>
-              <svg className="bi pe-none me-2" width="16" height="16">
-                
-              </svg>
-              Cambiar contraseña
-            </a>
-          </li>
-          <li>
-            <a href="#" className="nav-link link-body-emphasis">
-              <svg className="bi pe-none me-2" width="16" height="16">
-                
-              </svg>
-              Cerrar sesión
-            </a>
-          </li>
+          {menuItems.map((item) => (
+            <li key={item.path} className="nav-item">
+              <a
+                href="#"
+                className={`nav-link ${
+                  location.pathname === item.path ? "active" : "link-body-emphasis"
+                }`}
+                style={{
+                  backgroundColor: location.pathname === item.path ? "#3DDC44" : "transparent",
+                }}
+                onClick={() => navigate(item.path)}
+              >
+                <svg className="bi pe-none me-2" width="16" height="16"></svg>
+                {item.label}
+              </a>
+            </li>
+          ))}
         </ul>
         <hr />
         <div className="dropdown">
@@ -87,9 +65,9 @@ export const AdminSidebar = () => {
             />
             <strong>Administrator</strong>
           </a>
-          
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
+

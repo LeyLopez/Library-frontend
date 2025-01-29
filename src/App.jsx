@@ -28,7 +28,7 @@ function App() {
       <Header></Header>
       <AdminSidebar></AdminSidebar>
       <Routes>
-        <Route path="/" element={<Login></Login>}></Route>
+        <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
         <Route path="/clienthome" element={<ClientHome></ClientHome>}></Route>
         <Route

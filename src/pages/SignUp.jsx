@@ -217,7 +217,7 @@ export const SignUp = () => {
                 color: "#fff",
                 border: "none",
               }}
-              onClick={()=> navigate('/')}
+              onClick={()=> navigate('/login')}
             >
               Registrarme
             </button>
