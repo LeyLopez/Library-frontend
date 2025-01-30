@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { OptionsButton } from "../../components/OptionsButton";
 
 export const BookDetails = () => {
+
+  const [alertMessage, setalertMessage] = useState("");
 
   const book = {
     title: "Cien años de soledad",
@@ -12,6 +14,11 @@ export const BookDetails = () => {
     genre: "Novela",
     image: "cienaniossoledad.jpg",
     
+  }
+
+
+  const handleClick = ({btn}) => {
+    setalertMessage(`El libro "${book.title}" ha sido ${btn} exitosamente.`);
   }
 
   return (
@@ -57,18 +64,19 @@ export const BookDetails = () => {
             </div>
           </div>
 
-          <div style={{marginLeft: "25%"}}>
+          <div style={{marginLeft: "30%"}}>
         <button
           type="submit"
-          className="btn mt-3"
+          className="btn mt-3 justify-content-center"
           style={{
             position: "relative",
             borderColor:"black",
             backgroundColor: "#fff",
             color: "black",
-            width: "20%",
-            marginRight: "1%"
+            width: "30%",
+            right:"5px"
           }}
+          onClick={() => handleClick({btn: "reservado"})}
         >
           Reservar
         </button>
@@ -80,12 +88,14 @@ export const BookDetails = () => {
             borderColor:"black",
             backgroundColor: "#35C529",
             color: "white",
-            width: "20%",
+            width: "30%",
           }}
+          onClick={() => handleClick({btn: "prestado"})}
         >
           Prestar
         </button>
         </div>
+        {alertMessage && <div className="alert alert-warning" style={{marginTop:"10px"}}>{alertMessage}</div>}
         </div>
       </div>
     </div>
