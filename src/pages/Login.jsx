@@ -36,7 +36,7 @@ export const Login = () => {
               <a href="" onClick={()=>navigate("/recoverpassword")}>¿Olvidaste tu contraseña?</a>
             </div>
             <button
-              className="btn btn-primary w-100 py-2 my-2"
+              className="btn w-100 py-2 my-2"
               type="submit"
               style={{
                 backgroundColor: "#3DDC44",
