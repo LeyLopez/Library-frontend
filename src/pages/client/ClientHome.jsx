@@ -44,7 +44,7 @@ export const ClientHome = () => {
 
       <div>
         <SortBookBy />
-        <ClientSidebar></ClientSidebar>
+        
         <div
           className="container"
           style={{

@@ -1,10 +1,13 @@
-import { useContext } from "react";
+import { createContext, useState } from "react";
 
-const BookContext = useContext();
+const BookContext = createContext();
 
 
-export const BookProvider = () => {
+export const BookProvider = ({children}) => {
+
+  const [book, setBook] = useState(null);
+
   return (
-    <div>BookProvider</div>
+    <BookContext.Provider value={{book, setBook}}>{children}</BookContext.Provider>
   )
 }

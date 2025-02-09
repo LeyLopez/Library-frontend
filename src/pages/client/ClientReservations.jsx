@@ -1,5 +1,7 @@
-import React from 'react';
-import { OptionsButton } from '../../components/OptionsButton';
+import React, { useState } from "react";
+import { OptionsButton } from "../../components/OptionsButton";
+import { useNavigate } from "react-router-dom";
+import { ModalWarning } from "../../components/ModalWarning";
 
 export const ClientReservations = () => {
   // Lista de reservas
@@ -30,6 +32,21 @@ export const ClientReservations = () => {
     },
   ];
 
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState(null);
+
+  const openCancelModal = () => setIsCancelModalOpen(true);
+  const closeCancelModal = () => setIsCancelModalOpen(false);
+
+  const handleCancelReservation = () => {
+    closeCancelModal();
+    setAlertMessage("Cancelando reserva");
+
+    setTimeout(() => {
+      setAlertMessage("Reservación cancelada con éxito.");
+    }, 2000);
+  };
+
   return (
     <div
       className="d-flex justify-content-center py-5"
@@ -38,13 +55,19 @@ export const ClientReservations = () => {
         width: "90%",
         marginBottom: "10%",
         marginLeft: "10%",
-        top:"150px"
+        top: "150px",
       }}
     >
       <div className="col-md-9">
         <OptionsButton title={"Mis reservas"} />
         <br />
-        <div className="container" style={{ position: "relative", maxWidth: "90%" }}>
+        {alertMessage && (
+            <div className="alert alert-warning">{alertMessage}</div>
+          )}
+        <div
+          className="container"
+          style={{ position: "relative", maxWidth: "90%" }}
+        >
           {reservations.map((reservation) => (
             <div
               key={reservation.id}
@@ -56,17 +79,31 @@ export const ClientReservations = () => {
                 height: "10%",
               }}
             >
+              <ModalWarning
+                title={"Cancelar reserva"}
+                message={"¿Está seguro que desea cancelar la reserva?"}
+                isOpen={isCancelModalOpen}
+                onClose={closeCancelModal}
+                onConfirm={handleCancelReservation}
+              ></ModalWarning>
+              
               <br />
               <div className="row g-0">
                 <div className="col-md-2">
-                  <img src={reservation.image} alt={reservation.title} style={{ width: "50%" }} />
+                  <img
+                    src={reservation.image}
+                    alt={reservation.title}
+                    style={{ width: "50%" }}
+                  />
                 </div>
                 <div className="col-md-8">
                   <div className="card-body">
                     <h5 className="card-title">{reservation.title}</h5>
                     <p>Autor: {reservation.author}</p>
                     <p>Fecha de reserva: {reservation.reservationDate}</p>
-                    <p>Fecha de vencimiento de reserva: {reservation.dueDate}</p>
+                    <p>
+                      Fecha de vencimiento de reserva: {reservation.dueDate}
+                    </p>
                   </div>
                 </div>
                 <div className="col-md-2 d-flex align-items-center">
@@ -79,6 +116,7 @@ export const ClientReservations = () => {
                       backgroundColor: "#14AE5C",
                       color: "white",
                     }}
+                    onClick={openCancelModal}
                   >
                     Cancelar
                   </button>

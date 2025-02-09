@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const RecoverPasswordAuth = () => {
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleRecoverPassword = () => {
+    setAlertMessage("Su contraseña ha sido actualizada con éxito.");
+  };
+
   return (
     <div
       className="d-flex justify-content-center py-5"
@@ -14,6 +20,7 @@ export const RecoverPasswordAuth = () => {
     >
       <div className="col-md-9">
         <h2 className="h3 mb-3">Cambiar contraseña</h2>
+        {alertMessage && <div className="alert alert-warning">{alertMessage}</div>}
         <form className="row g-3" style={{ position: "relative"}}>
           <div className="col-md-5">
             <label className="form-label" style={{width:"100%"}}>Contraseña actual</label>
@@ -53,6 +60,7 @@ export const RecoverPasswordAuth = () => {
             color: "white",
             width: "20%",
           }}
+          onClick={handleRecoverPassword}
         >
           Actualizar
         </button>

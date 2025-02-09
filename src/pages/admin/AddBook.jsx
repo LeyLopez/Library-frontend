@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { OptionsButton } from '../../components/OptionsButton'
 
 export const AddBook = () => {
+
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const handleAddButton = () => {
+    setAlertMessage("Libro agregado correctamente");
+  }
+
   return (
 
     <div
@@ -73,9 +80,21 @@ export const AddBook = () => {
               color: "white",
               width: "20%",
             }}
+            onClick={handleAddButton}
           >
             Agregar libro
           </button>
+          <div>
+            {alertMessage && (
+              <div
+                className="alert alert-success"
+                role="alert"
+                style={{ position: "relative", width:"41%", marginTop: "10px" }}
+              >
+                {alertMessage}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

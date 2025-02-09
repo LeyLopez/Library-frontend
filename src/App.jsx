@@ -26,7 +26,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header></Header>
-      <AdminSidebar></AdminSidebar>
+      <ClientSidebar></ClientSidebar>
       <Routes>
       <Route path="/" element={<Login></Login>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
