@@ -10,7 +10,6 @@ export const AdminSidebar = () => {
     { path: "/addbook", label: "Agregar libro" },
     { path: "/deletebook", label: "Eliminar libro" },
     { path: "/updatebook", label: "Modificar libro" },
-    { path: "/recoverpasswordauth", label: "Cambiar contraseña" },
     { path: "/login", label: "Cerrar sesión" },
   ];
 

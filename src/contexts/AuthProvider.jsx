@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(null);
@@ -8,9 +8,10 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
 
-    if (token) {
-      setAuth({ username: "usuario_demo", role: "admin" });
+    if (token && user) {
+      setAuth(user);
     } else {
       setAuth(null);
     }
@@ -18,13 +19,34 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const login = (token) => {
-    localStorage.setItem("token", token);
-    setAuth({ username: "usuario_demo", role: "admin" });
+  const login = (username, password) => {
+    
+    const users = [
+      {username: "admin", password: "admin123", role: "admin"},
+      {username: "cliente", password: "cliente123", role: "cliente"}
+    ];
+
+    const user = users.find(
+      (u)=> u.username === username && u.password === password
+    );
+
+    if (user){
+      const token = "fake-jwt-token";
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      setAuth(user);
+      return true; //login success
+
+    }else{
+      return false; //Login failed
+    };
   };
+
+  
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setAuth(null);
   };
 
