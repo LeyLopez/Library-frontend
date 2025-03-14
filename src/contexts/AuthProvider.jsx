@@ -1,58 +1,101 @@
-import { createContext, useState, useEffect } from "react";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { createContext, useContext, useEffect, useState } from "react";
+import { userService } from "../api/userService";
+
 
 export const AuthContext = createContext();
 
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
+
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user") || "null")
+  );
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user"));
+  const [isAuthenticated, setIsAuthenticated] = useState(() =>
+    localStorage.getItem("isAuthenticated") === "true"
+  );
 
-    if (token && user) {
-      setAuth(user);
-    } else {
-      setAuth(null);
-    }
-    
-    setLoading(false);
-  }, []);
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
 
-  const login = (username, password) => {
-    
-    const users = [
-      {username: "admin", password: "admin123", role: "admin"},
-      {username: "cliente", password: "cliente123", role: "cliente"}
-    ];
 
-    const user = users.find(
-      (u)=> u.username === username && u.password === password
-    );
-
-    if (user){
-      const token = "fake-jwt-token";
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-      setAuth(user);
-      return true; //login success
-
-    }else{
-      return false; //Login failed
-    };
-  };
-
+  const [roles, setRoles] = useState([]);
   
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setAuth(null);
+  useEffect(() => {
+    localStorage.setItem("isAuthenticated", isAuthenticated ? "true" : "false");
+  }, [isAuthenticated]);
+
+
+  const login = async (loginRequest) => {
+    try {
+      console.log(loginRequest);
+      const { data } = await axios.post("http://localhost:8080/api/auth/login", loginRequest);
+      console.log(data);
+
+
+      if (!data.token || data.token.split(".").length !== 3) {
+        throw new Error("Token inválido recibido del servidor.");
+      }
+
+      setIsAuthenticated(true);
+      setToken(data.token);
+      localStorage.setItem("token", data.token);
+      setRoles(data.roles);
+
+      console.log(roles);
+
+      await loadUser(data.token);
+    } 
+    catch (error) {
+      console.error("Error al iniciar sesión:", error.response?.data?.message || error.message);
+      throw error;
+    }
   };
 
+  const loadUser = async (token) => {
+    try {
+      const decodedToken = jwtDecode(token);
+      const client = await userService.getUserByUsername(decodedToken.sub, token);
+      localStorage.setItem("user", JSON.stringify(client));
+      setUser(client);
+    } catch (error) {
+      console.error("Error al cargar el usuario:", error.response?.data?.message || error.message);
+    }
+  };
+
+
+  const logout = () => {
+    setToken(null);
+    setUser(null);
+    setIsAuthenticated(false);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("isAuthenticated");
+    localStorage.clear();
+  };
+
+
+  useEffect(() => {
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    } else {
+      delete axios.defaults.headers.common["Authorization"];
+    }
+  }, [token]);
+
   return (
-    <AuthContext.Provider value={{ auth, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated, roles}}>
       {children}
     </AuthContext.Provider>
   );
+
+
 };

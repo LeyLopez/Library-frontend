@@ -12,8 +12,9 @@ export const ModalWarning = ({
       className={`modal fade ${isOpen ? "show d-block" : ""}`}
       tabIndex="-1"
       role="dialog"
+      
     >
-      <div className="modal-dialog">
+      <div className="modal-dialog" style={{backgroundColor:"rgba(0,0,0,0.5)"}}>
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">{title}</h5>

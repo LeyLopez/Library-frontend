@@ -1,24 +1,44 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthProvider";
+import { useAuth } from "../contexts/AuthProvider";
 
 export const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { user, login, isAuthenticated, roles } = useAuth();
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  
+  const [loginRequest, setLoginRequest] = useState({
+    username: "",
+    password: ""
+  })
 
-  const handleLogin = () => {
-    const success = login(username, password);
-    if (success) {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (user?.role === "admin") {
+  const [error, setError] = useState("");
+
+
+  const showError = (error) => {
+    console.log({severity:'error', summary: 'Error', detail:`${error}`, life: 3000});
+}
+
+
+  useEffect(()=>{
+    if(isAuthenticated){
+      if (user?.roles === "ROLE_ADMIN") {
         navigate("/booklist");
-      } else if (user?.role === "cliente") {
+      } else if (user?.roles === "ROLE_USER") {
         navigate("/clienthome");
       }
-    } else {
-      alert("Credenciales incorrectas"); // Opcional: Manejo de error
+    }
+  },[isAuthenticated]);
+
+  const handleLogin = async() => {
+    try {
+      await login(loginRequest); // Ejecutar la función de login
+      
+    } catch (error) {
+      setError("Error al iniciar sesión, verifica las credenciales");
+      showError('Error al iniciar sesión, verifica las credenciales');
+      setTimeout(()=>{
+          setError(null);
+      }, 5000);
     }
   };
 
@@ -32,12 +52,13 @@ export const Login = () => {
 
               <div className="form-floating">
                 <input
-                  type="text" // Cambiado de email a text
+                  type="text"
                   className="form-control"
                   id="floatingInput"
                   placeholder="Usuario"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={loginRequest.username}
+                  required
+                  onChange={(e) => {setLoginRequest({...loginRequest, username: e.target.value})}}
                 />
                 <label htmlFor="floatingInput">Usuario</label>
               </div>
@@ -47,8 +68,9 @@ export const Login = () => {
                   className="form-control"
                   id="floatingPassword"
                   placeholder="Contraseña"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  value={loginRequest.password}
+                  onChange={(e) => setLoginRequest({...loginRequest, password: e.target.value})}
                 />
                 <label htmlFor="floatingPassword">Contraseña</label>
               </div>
