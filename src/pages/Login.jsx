@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthProvider";
 
 export const Login = () => {
-  const { user, login, isAuthenticated, roles } = useAuth();
+  const { login, isAuthenticated, roles } = useAuth();
   const navigate = useNavigate();
   
   const [loginRequest, setLoginRequest] = useState({
@@ -20,14 +20,14 @@ export const Login = () => {
 
 
   useEffect(()=>{
-    if(isAuthenticated){
-      if (user?.roles === "ROLE_ADMIN") {
+    if(isAuthenticated && roles.length>0){
+      if (roles.includes("ROLE_ADMIN")) {
         navigate("/booklist");
-      } else if (user?.roles === "ROLE_USER") {
+      } else if (roles.includes("ROLE_USER")) {
         navigate("/clienthome");
       }
     }
-  },[isAuthenticated]);
+  },[isAuthenticated, roles]);
 
   const handleLogin = async() => {
     try {

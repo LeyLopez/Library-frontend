@@ -26,7 +26,9 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(() => localStorage.getItem("token"));
 
 
-  const [roles, setRoles] = useState([]);
+  const [roles, setRoles] = useState(() => 
+    JSON.parse(localStorage.getItem("roles") || "[]")
+  );
   
 
   useEffect(() => {
@@ -48,7 +50,9 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       setToken(data.token);
       localStorage.setItem("token", data.token);
+      
       setRoles(data.roles);
+      localStorage.setItem("roles", JSON.stringify(data.roles));
 
       console.log(roles);
 
@@ -76,9 +80,11 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
     setUser(null);
     setIsAuthenticated(false);
+    setRoles([]);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("roles");
     localStorage.clear();
   };
 

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./App.css";
@@ -22,60 +22,57 @@ import { ClientSidebar } from "./pages/client/ClientSidebar";
 import { AdminSidebar } from "./pages/admin/AdminSidebar";
 import { BookDetailsAdmin } from "./pages/admin/BookDetailsAdmin";
 import { useContext } from "react";
-import { AuthContext, AuthProvider } from "./contexts/AuthProvider";
+import { AuthContext, AuthProvider, useAuth } from "./contexts/AuthProvider";
 import { ProtectedRoutes } from "./components/ProtectedRoutes";
 
 function App() {
-  const { auth } = useContext(AuthContext);
+  const { isAuthenticated, roles } = useAuth();
 
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Header></Header>
+<BrowserRouter>
+      <Header />
 
-        {auth && auth.role === "admin" && <AdminSidebar />}
-        {auth && auth.role === "cliente" && <ClientSidebar />}
+      {isAuthenticated && roles.includes("ROLE_ADMIN") && <AdminSidebar />}
+      {isAuthenticated && roles.includes("ROLE_USER") && <ClientSidebar />}
 
-        <Routes>
-          <Route path="/" element={<Login />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/recoverpassword" element={<RecoverPassword />}></Route>
+      <Routes>
 
-          <Route element={<ProtectedRoutes allowedRoles={["cliente"]} />}>
-            <Route path="/clienthome" element={<ClientHome />}></Route>
-            <Route path="/clientdata" element={<ClientData />}></Route>
-            <Route
-              path="/recoverpasswordauth"
-              element={<RecoverPasswordAuth />}
-            />
-            <Route path="/myloans" element={<ClientLoans />}></Route>
-            <Route
-              path="/myreservations"
-              element={<ClientReservations />}
-            ></Route>
-            <Route path="/deletemyaccount" element={<DeleteAccount />}></Route>
-            <Route
-              path="/clientnotifications"
-              element={<ClientNotification />}
-            ></Route>
-            <Route path="/clientbookdetails" element={<BookDetails />}></Route>
-          </Route>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/recoverpassword" element={<RecoverPassword />} />
 
-          <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
-            <Route path="/booklist" element={<BookList />}></Route>
-            <Route path="/addbook" element={<AddBook />}></Route>
-            <Route path="/deletebook" element={<DeleteBook />}></Route>
-            <Route path="/updatebook" element={<UpdateBook />}></Route>
+        
+        {isAuthenticated && roles.includes("ROLE_USER") ? (
+          <>
+            <Route path="/clienthome" element={<ClientHome />} />
+            <Route path="/clientdata" element={<ClientData />} />
+            <Route path="/recoverpasswordauth" element={<RecoverPasswordAuth />} />
+            <Route path="/myloans" element={<ClientLoans />} />
+            <Route path="/myreservations" element={<ClientReservations />} />
+            <Route path="/deletemyaccount" element={<DeleteAccount />} />
+            <Route path="/clientnotifications" element={<ClientNotification />} />
+            <Route path="/clientbookdetails" element={<BookDetails />} />
+          </>
+        ) : (
+        
+          <Route path="/clienthome" element={<Navigate to="/login" />} />
+        )}
 
-            <Route
-              path="/adminbookdetails"
-              element={<BookDetailsAdmin />}
-            ></Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+        
+        {isAuthenticated && roles.includes("ROLE_ADMIN") ? (
+          <>
+            <Route path="/booklist" element={<BookList />} />
+            <Route path="/addbook" element={<AddBook />} />
+            <Route path="/deletebook" element={<DeleteBook />} />
+            <Route path="/updatebook" element={<UpdateBook />} />
+            <Route path="/adminbookdetails" element={<BookDetailsAdmin />} />
+          </>
+        ) : (
+          <Route path="/booklist" element={<Navigate to="/login" />} />
+        )}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
