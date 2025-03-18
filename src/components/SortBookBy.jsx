@@ -2,7 +2,7 @@ import React from 'react'
 
 export const SortBookBy = () => {
   return (
-    <div style={{ position: "relative", width: "90%", marginLeft: "20%", top: "150px", zIndex:"5" }}> 
+    <div style={{ position: "relative", width: "90%", marginLeft: "20%", top: "150px", zIndex:"10" }}> 
       <div className="btn-group">
         <p
           style={{

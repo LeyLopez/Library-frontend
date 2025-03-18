@@ -1,6 +1,10 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthProvider";
 
 export const AdminSidebar = () => {
+
+  const { logout } = useAuth();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -39,7 +43,7 @@ export const AdminSidebar = () => {
                 style={{
                   backgroundColor: location.pathname === item.path ? "#3DDC44" : "transparent",
                 }}
-                onClick={() => navigate(item.path)}
+                onClick={() => {item.label==="Cerrar sesión" ? logout() && navigate(item.path) : navigate(item.path)} }
               >
                 <svg className="bi pe-none me-2" width="16" height="16"></svg>
                 {item.label}

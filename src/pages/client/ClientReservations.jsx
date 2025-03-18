@@ -1,36 +1,29 @@
 import React, { useState } from "react";
 import { OptionsButton } from "../../components/OptionsButton";
-import { useNavigate } from "react-router-dom";
 import { ModalWarning } from "../../components/ModalWarning";
+import { useAuth } from "../../contexts/AuthProvider";
+import axios from "axios";
 
 export const ClientReservations = () => {
   // Lista de reservas
-  const reservations = [
-    {
-      id: 1,
-      title: "Cien años de soledad",
-      author: "Gabriel García Márquez",
-      reservationDate: "2025-01-10",
-      dueDate: "2025-01-20",
-      image: "cienaniossoledad.jpg",
-    },
-    {
-      id: 2,
-      title: "Don Quijote de la Mancha",
-      author: "Miguel de Cervantes",
-      reservationDate: "2025-01-11",
-      dueDate: "2025-01-21",
-      image: "donquijote.jpg",
-    },
-    {
-      id: 3,
-      title: "1984",
-      author: "George Orwell",
-      reservationDate: "2025-01-12",
-      dueDate: "2025-01-22",
-      image: "1984.jpg",
-    },
-  ];
+  const [reservations, setReservations] = useState([]);
+
+  const { user } = useAuth();
+
+  // Obtener reservas
+  const getReservations = async () => {
+    try {
+      // Petición GET al servidor
+      const response = await axios.get(`http://localhost:8080/api/reserva/user/${user.id}`);
+      setReservations(response.data);
+    } catch (error) {
+      console.error("Error al obtener las reservas", error);
+    }
+  };
+
+  useEffect(() => {
+    getReservations();
+  }, []);
 
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [alertMessage, setAlertMessage] = useState(null);
@@ -102,7 +95,7 @@ export const ClientReservations = () => {
                     <p>Autor: {reservation.author}</p>
                     <p>Fecha de reserva: {reservation.reservationDate}</p>
                     <p>
-                      Fecha de vencimiento de reserva: {reservation.dueDate}
+                      Fecha de vencimiento de reserva: {reservation.reservationEndDate}
                     </p>
                   </div>
                 </div>

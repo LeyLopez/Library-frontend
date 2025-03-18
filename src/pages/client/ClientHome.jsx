@@ -1,42 +1,31 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Navbar } from "../../components/Navbar";
 import { SortBookBy } from "../../components/SortBookBy";
-import { ClientSidebar } from "./ClientSidebar";
 import { useNavigate } from "react-router-dom";
+import { BookContext } from "../../contexts/BookProvider";
+import axios from "axios";
 
 export const ClientHome = () => {
   const navigate = useNavigate();
 
+  const { setBook } = useContext(BookContext);
+
   // Lista de libros
-  const books = [
-    {
-      id: 1,
-      title: "Cien años de soledad",
-      description:
-        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-      author: "Gabriel García Márquez",
-      year: 1967,
-      image: "cienaniossoledad.jpg",
-    },
-    {
-      id: 2,
-      title: "Don Quijote de la Mancha",
-      description:
-        "A tale of chivalry and adventure in Spain during the early 17th century.",
-      author: "Miguel de Cervantes",
-      year: 1605,
-      image: "donquijote.jpg",
-    },
-    {
-      id: 3,
-      title: "1984",
-      description:
-        "A dystopian novel set in a totalitarian society under constant surveillance.",
-      author: "George Orwell",
-      year: 1949,
-      image: "1984.jpg",
-    },
-  ];
+  const [books, setBooks] = useState([]);
+
+  // Obtener libros
+  const getBooks = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/libro");
+      setBooks(response.data);
+    } catch (error) {
+      console.error("Error al obtener los libros", error);
+    }
+  };
+
+  useEffect(() => {
+    getBooks();
+  }, []);
 
   return (
     <>
@@ -44,7 +33,6 @@ export const ClientHome = () => {
 
       <div>
         <SortBookBy />
-        
         <div
           className="container"
           style={{
@@ -52,7 +40,7 @@ export const ClientHome = () => {
             maxWidth: "70%",
             marginTop: "2%",
             display: "block",
-            top:"150px"
+            top: "150px",
           }}
         >
           {books.map((book) => (
@@ -69,7 +57,7 @@ export const ClientHome = () => {
               <div className="row g-0">
                 <div className="col-md-2">
                   <img
-                    src={book.image}
+                    src={book.coverPage}
                     alt={book.title}
                     style={{ width: "50%" }}
                   />
@@ -79,7 +67,7 @@ export const ClientHome = () => {
                     <h5 className="card-title">{book.title}</h5>
                     <p className="card-text">{book.description}</p>
                     <p>Autor: {book.author}</p>
-                    <p>Año de publicación: {book.year}</p>
+                    <p>Año de publicación: {book.dateOfPublication}</p>
                   </div>
                 </div>
                 <div className="col-md-2 d-flex align-items-center">
@@ -92,7 +80,10 @@ export const ClientHome = () => {
                       backgroundColor: "#14AE5C",
                       color: "white",
                     }}
-                    onClick={() => navigate("/clientbookdetails")}
+                    onClick={() => {
+                      setBook(book);
+                      navigate("/clientbookdetails");
+                    }}
                   >
                     Detalles
                   </button>
