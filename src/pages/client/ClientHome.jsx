@@ -12,6 +12,7 @@ export const ClientHome = () => {
 
   // Lista de libros
   const [books, setBooks] = useState([]);
+  const [authors, setAuthors] = useState({});
 
   // Obtener libros
   const getBooks = async () => {
@@ -23,9 +24,35 @@ export const ClientHome = () => {
     }
   };
 
+
+  const getAuthor = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/autor/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error al obtener el autor", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     getBooks();
   }, []);
+
+  useEffect(() => {
+    const fetchAuthors = async () => {
+      const authorsData = {};
+      for (const book of books) {
+        if(!authorsData[book.author]) {
+          authorsData[book.author] = await getAuthor(book.author);
+        }
+      }
+      setAuthors((prev)=>({...prev, ...authorsData}));  
+    };
+    if (books.length>0){
+      fetchAuthors();
+    }
+  }, [books]);
 
   return (
     <>
@@ -66,7 +93,7 @@ export const ClientHome = () => {
                   <div className="card-body">
                     <h5 className="card-title">{book.title}</h5>
                     <p className="card-text">{book.description}</p>
-                    <p>Autor: {book.author}</p>
+                    <p>Autor: {authors[book.author]?.name || "Cargando..."}</p>
                     <p>Año de publicación: {book.dateOfPublication}</p>
                   </div>
                 </div>
