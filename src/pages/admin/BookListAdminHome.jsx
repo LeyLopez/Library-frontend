@@ -1,45 +1,57 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Navbar } from "../../components/Navbar";
 import { SortBookBy } from "../../components/SortBookBy";
-import { AdminSidebar } from "./AdminSidebar";
 import { useNavigate } from "react-router-dom";
 import { BookContext } from "../../contexts/BookProvider";
-import { bookService } from "../../api/bookService";
+import axios from "axios";
 
 export const BookList = () => {
 
   const navigate = useNavigate();
 
-  const {setBook, setAuthor} = useContext(BookContext); 
+  const { setBook, setAuthor, setGenre } = useContext(BookContext);
 
+  // Lista de libros
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState({});
+  const [genres, setGenres] = useState([]);
 
+  // Obtener libros
   const getBooks = async () => {
     try {
-      const response = await bookService.getAllBooks();
+      const response = await axios.get("http://localhost:8080/api/libro");
       setBooks(response.data);
     } catch (error) {
       console.error("Error al obtener los libros", error);
     }
-  }
+  };
 
-  
+
   const getAuthor = async (id) => {
-      try {
-        const response = await authorService.getAuthorById(id);
-        return response.data;
-      } catch (error) {
-        console.error("Error al obtener el autor", error);
-        return null;
-      }
-    };
+    try {
+      const response = await axios.get(`http://localhost:8080/api/autor/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error al obtener el autor", error);
+      return null;
+    }
+  };
+
+  const getGenre = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/genero/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error al obtener el género", error);
+      return null;
+    }
+  };
 
   useEffect(() => {
-      getBooks();
+    getBooks();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchAuthors = async () => {
       const authorsData = {};
       for (const book of books) {
@@ -54,7 +66,20 @@ export const BookList = () => {
     }
   }, [books]);
 
-
+  useEffect(() => {
+    const fetchGenres = async () => {
+      const genresData = {};
+      for (const book of books) {
+        if(!genresData[book.genre]) {
+          genresData[book.genre] = await getGenre(book.genre);
+        }
+      }
+      setGenres((prev)=>({...prev, ...genresData}));  
+    };
+    if (books.length>0){
+      fetchGenres();
+    }
+  }, [books]);
   
 
   return (
@@ -101,8 +126,9 @@ export const BookList = () => {
                     <div className="card-body">
                       <h5 className="card-title">{book.title}</h5>
                       <p className="card-text">{book.description}</p>
-                      <p>Autor: {book.author}</p>
+                      <p>Autor: {authors[book.author]?.name || "Cargando..."}</p>
                       <p>Año de publicación: {book.year}</p>
+                      <p>Género: {genres[book.genre]?.name || "Cargando..."}</p>
                     </div>
                   </div>
                   <div className="col-md-2 d-flex align-items-center">
@@ -119,6 +145,7 @@ export const BookList = () => {
                       onClick={() => {
                         setBook(book);
                         setAuthor(authors[book.author]);
+                        setGenre(genres[book.genre]);
                         navigate("/adminbookdetails")}}
                     >
                       Detalles 

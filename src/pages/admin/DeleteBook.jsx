@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Navbar } from "../../components/Navbar";
+import React, { useEffect, useState } from "react";
 import { OptionsButton } from "../../components/OptionsButton";
 import { ModalWarning } from "../../components/ModalWarning";
+import axios from "axios";
 
 export const DeleteBook = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -9,33 +9,9 @@ export const DeleteBook = () => {
   const [selectedBook, setSelectedBook] = useState(null);
   const [alertMessage, setAlertMessage] = useState("");
 
-  const books = [
-    {
-      id: 1,
-      title: "Cien años de soledad",
-      author: "Gabriel García Márquez",
-      year: 1967,
-      image: "cienaniossoledad.jpg",
-    },
-    {
-      id: 2,
-      title: "Don Quijote de la Mancha",
-      author: "Miguel de Cervantes",
-      year: 1605,
-      image: "donquijote.jpg",
-    },
-    {
-      id: 3,
-      title: "1984",
-      author: "George Orwell",
-      year: 1949,
-      image: "1984.jpg",
-    },
-  ];
+  const [books, setBooks] = useState([]);
 
-  const filteredBooks = books.filter((book) =>
-    book.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+ 
 
   const handleDeleteClick = (book) => {
     setSelectedBook(book);
@@ -43,17 +19,38 @@ export const DeleteBook = () => {
   };
 
 
-  const confirmDelete = () => {
+  const getBooks = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/api/libro");
+      setBooks(response.data);
+    } catch (error) {
+      console.error("Error al obtener los libros", error);
+    }
+  }
+
+  useEffect(()=>{
+    getBooks();
+  }, []);
+
+
+  const confirmDelete = async() => {
     setShowModal(false);
 
-    setAlertMessage("Eliminando libro.");
-
-    setTimeout(() => {
-      setAlertMessage(
-        `El libro "${selectedBook.title}" ha sido eliminado exitosamente.`
-      );
-    }, 2000);
+    setAlertMessage("Eliminando libro...");
+    try {
+      await axios.delete(`http://localhost:8080/api/libro/${selectedBook.id}`);
+      setAlertMessage(`El libro "${selectedBook.title}" ha sido eliminado exitosamente.`);
+      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== selectedBook.id));
+    } catch (error) {
+      console.error("Error al eliminar el libro", error);
+      setAlertMessage("Error al eliminar el libro.");
+    }
   };
+
+
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -104,7 +101,7 @@ export const DeleteBook = () => {
                   <div className="row g-0">
                     <div className="col-md-2">
                       <img
-                        src={book.image}
+                        src={book.coverPage}
                         alt={book.title}
                         style={{ width: "50%" }}
                       />
@@ -112,8 +109,8 @@ export const DeleteBook = () => {
                     <div className="col-md-8">
                       <div className="card-body">
                         <h5 className="card-title">{book.title}</h5>
-                        <p>Autor: {book.author}</p>
-                        <p>Año de publicación: {book.year}</p>
+                        <p>Año de publicación: {book.dateOfPublication}</p>
+                        <p>Disponibilidad: {book.quantity}</p>
                       </div>
                     </div>
                     <div className="col-md-2 d-flex align-items-center">

@@ -30,7 +30,7 @@ export const SortBookBy = () => {
         >
           Género
         </button>
-        <ul className="dropdown-menu">
+        <ul className="dropdown-menu" style={{ zIndex: 10 }}>
           <li>
             <a className="dropdown-item" href="#">
               Comedia
@@ -54,47 +54,6 @@ export const SortBookBy = () => {
           <li>
             <a className="dropdown-item" href="#">
               Fantasía
-            </a>
-          </li>
-        </ul>
-        <button
-          type="button"
-          className="btn dropdown"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-          style={{
-            position: "relative",
-            marginLeft: "20%",
-            marginBottom: 0,
-            borderRadius: 10,
-          }}
-        >
-          Tipo de ejemplar
-        </button>
-        <ul className="dropdown-menu">
-          <li>
-            <a className="dropdown-item" href="#">
-              Enciclopedia
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Diccionario
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Literatura
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Biografía
-            </a>
-          </li>
-          <li>
-            <a className="dropdown-item" href="#">
-              Atlas
             </a>
           </li>
         </ul>

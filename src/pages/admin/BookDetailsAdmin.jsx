@@ -1,18 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { OptionsButton } from '../../components/OptionsButton'
+import { BookContext } from '../../contexts/BookProvider';
 
 export const BookDetailsAdmin = () => {
-    const book = {
-        title: "Cien años de soledad",
-        description:
-          "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
-        fechaPublicacion: 1967,
-        author: "Gabriel García Márquez",
-        genre: "Novela",
-        image: "cienaniossoledad.jpg",
-        disponibility:10
-        
-      }
+    const {book, author, genre} = useContext(BookContext);
     
       return (
         <div className="container">
@@ -41,7 +32,7 @@ export const BookDetailsAdmin = () => {
               <div className="card mb-3" style={{maxWidth: "100%"}}>
                 <div className="row">
                   <div className="col-md-4">
-                    <img src={book.image} className="img-fluid rounded-start" alt="..." />
+                    <img src={book.coverPage} className="img-fluid rounded-start" alt="..." />
                   </div>
                   <div className="col-md-6">
                     <div className="card-body">
@@ -49,10 +40,10 @@ export const BookDetailsAdmin = () => {
                       <p className="card-text">
                         Resumen  {book.description}
                       </p>
-                      <p>Autor: {book.author}</p>
-                      <p>Año de publicación: {book.fechaPublicacion}</p>
-                      <p>Género: {book.genre}</p>
-                      <p>Disponibilidad: {book.disponibility}</p>
+                      <p>Autor: {author.name}</p>
+                      <p>Año de publicación: {book.dateOfPublication}</p>
+                      <p>Género: {genre.name}</p>
+                      <p>Disponibilidad: {book.quantity}</p>
                     </div>
                   </div>
                 </div>

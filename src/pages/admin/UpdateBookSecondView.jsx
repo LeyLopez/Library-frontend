@@ -1,25 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { OptionsButton } from "../../components/OptionsButton";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { OptionsButton } from '../../components/OptionsButton';
+import { BookContext } from '../../contexts/BookProvider';
 
-export const AddBook = () => {
-  const [alertMessage, setAlertMessage] = useState("");
+export const UpdateBookSecondView = () => {
+    const [alertMessage, setAlertMessage] = useState("");
   const navigate = useNavigate();
   const [authors, setAuthors] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [newAuthor, setNewAuthor] = useState("");
-  const [newGenre, setNewGenre] = useState("");
-
-  const [newBook, setNewBook] = useState({
-    title: "",
-    description: "",
-    dateOfPublication: "",
-    quantity: 0,
-    author: 0,
-    coverPage: "",
-    genre: 0,
-  });
+  const { book, setBook, genre, setGenre, author, setAuthor } = useContext(BookContext)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -76,29 +66,7 @@ export const AddBook = () => {
   };
 
 
-  const handleAddAuthor = async () => {
-    if (!newAuthor) return;
-    try {
-      const response = await axios.post("http://localhost:8080/api/autor", { name: newAuthor });
-      setAuthors([...authors, response.data]);
-      setNewBook((prev) => ({ ...prev, author: response.data.id }));
-      setNewAuthor("");
-    } catch (error) {
-      console.error("Error adding author", error);
-    }
-  };
 
-  const handleAddGenre = async () => {
-    if (!newGenre) return;
-    try {
-      const response = await axios.post("http://localhost:8080/api/genero", { name: newGenre });
-      setGenres([...genres, response.data]);
-      setNewBook((prev) => ({ ...prev, genre: response.data.id }));
-      setNewGenre("");
-    } catch (error) {
-      console.error("Error adding genre", error);
-    }
-  };
 
   return (
     <div
@@ -112,7 +80,7 @@ export const AddBook = () => {
       }}
     >
       <div className="col-md-9">
-        <OptionsButton title={"Agregar libro a la biblioteca"}></OptionsButton>
+        <OptionsButton title={"Actualizar libro de la biblioteca"}></OptionsButton>
         <form
           className="row g-3"
           style={{ position: "relative" }}
@@ -126,22 +94,18 @@ export const AddBook = () => {
               type="text"
               name="title"
               className="form-control"
-              value={newBook.title}
+              value={book.title}
               onChange={handleInputChange}
             />
           </div>
           <div className="col-md-5">
             <label className="form-label">Autor</label>
-            <select className="form-select" name="author" value={newBook.author} onChange={handleInputChange}>
+            <select className="form-select" name="author" value={book.author} onChange={handleInputChange}>
               <option value="0">Seleccione un autor</option>
               {authors.map((author) => (
                 <option key={author.id} value={author.id}>{author.name}</option>
               ))}
             </select>
-            <div className="input-group mb-3">
-            <input type="text" placeholder="Nuevo autor" className="form-control" value={newAuthor} onChange={(e) => setNewAuthor(e.target.value)} />
-            <button type="button" className="btn btn-outline-secondary" onClick={handleAddAuthor}>Agregar autor</button>
-            </div>
           </div>
 
           <div className="col-md-5">
@@ -150,22 +114,18 @@ export const AddBook = () => {
               type="text"
               name="dateOfPublication"
               className="form-control"
-              value={newBook.dateOfPublication}
+              value={book.dateOfPublication}
               onChange={handleInputChange}
             />
           </div>
           <div className="col-md-5">
             <label className="form-label">Género</label>
-            <select className="form-select" name="genre" value={newBook.genre} onChange={handleInputChange}>
+            <select className="form-select" name="genre" value={book.genre} onChange={handleInputChange}>
               <option value="0">Seleccione un género</option>
               {genres.map((genre) => (
                 <option key={genre.id} value={genre.id}>{genre.name}</option>
               ))}
             </select>
-            <div className="input-group mb-3">
-            <input type="text" placeholder="Nuevo género" className = "form-control" value={newGenre} onChange={(e) => setNewGenre(e.target.value)} />
-            <button type="button" className="btn btn-outline-secondary" onClick={handleAddGenre}>Agregar género</button>
-            </div>
           </div>
           <div className="col-md-5">
             <label className="form-label">Cantidades disponibles</label>
@@ -173,7 +133,7 @@ export const AddBook = () => {
               type="text"
               name="quantity"
               className="form-control"
-              value={newBook.quantity}
+              value={book.quantity}
               onChange={handleInputChange}
             />
           </div>
@@ -183,7 +143,7 @@ export const AddBook = () => {
               type="text"
               name="coverPage"
               className="form-control"
-              value={newBook.coverPage}
+              value={book.coverPage}
               onChange={handleInputChange}
             />
           </div>
@@ -193,7 +153,7 @@ export const AddBook = () => {
               type="text"
               name="description"
               className="form-control"
-              value={newBook.description}
+              value={book.description}
               onChange={handleInputChange}
             />
           </div>
@@ -245,5 +205,5 @@ export const AddBook = () => {
         </div>
       </div>
     </div>
-  );
-};
+    );
+}

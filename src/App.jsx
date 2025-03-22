@@ -23,6 +23,7 @@ import { AdminSidebar } from "./pages/admin/AdminSidebar";
 import { BookDetailsAdmin } from "./pages/admin/BookDetailsAdmin";
 import { BookProvider } from "./contexts/BookProvider";
 import { useAuth } from "./contexts/AuthProvider";
+import { UpdateBookSecondView } from "./pages/admin/UpdateBookSecondView";
 
 function App() {
   const { isAuthenticated, roles } = useAuth();
@@ -69,6 +70,7 @@ function App() {
               <Route path="/deletebook" element={<DeleteBook />} />
               <Route path="/updatebook" element={<UpdateBook />} />
               <Route path="/adminbookdetails" element={<BookDetailsAdmin />} />
+              <Route path="/updatebooksecondview" element={<UpdateBookSecondView/>}></Route>
             </>
           ) : (
             <Route path="/booklist" element={<Navigate to="/login" />} />

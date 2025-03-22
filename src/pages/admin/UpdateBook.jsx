@@ -1,32 +1,32 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { OptionsButton } from "../../components/OptionsButton";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { BookContext } from "../../contexts/BookProvider";
 
 export const UpdateBook = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [books, setBooks] = useState([]);
+  const navigate = useNavigate();
+  const {setBook} = useContext(BookContext);
 
-  const books = [
-    {
-      id: 1,
-      title: "Cien años de soledad",
-      author: "Gabriel García Márquez",
-      year: 1967,
-      image: "cienaniossoledad.jpg",
-    },
-    {
-      id: 2,
-      title: "Don Quijote de la Mancha",
-      author: "Miguel de Cervantes",
-      year: 1605,
-      image: "donquijote.jpg",
-    },
-    {
-      id: 3,
-      title: "1984",
-      author: "George Orwell",
-      year: 1949,
-      image: "1984.jpg",
-    },
-  ];
+
+  const getBooks = async () => {
+    try{
+      const response = await axios.get("http://localhost:8080/api/libro");
+      setBooks(response.data);
+    }
+    catch(error){
+      console.error("Error al obtener los libros", error);
+    }
+  }
+
+
+  useEffect(()=>{
+    getBooks();
+  }, []);
+  
+
 
   const filteredBooks = books.filter((book) =>
     book.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -71,7 +71,7 @@ export const UpdateBook = () => {
                 <div className="row g-0">
                   <div className="col-md-2">
                     <img
-                      src={book.image}
+                      src={book.coverPage}
                       alt={book.title}
                       style={{ width: "50%" }}
                     />
@@ -80,7 +80,8 @@ export const UpdateBook = () => {
                     <div className="card-body">
                       <h5 className="card-title">{book.title}</h5>
                       <p>Autor: {book.author}</p>
-                      <p>Año de publicación: {book.year}</p>
+                      <p>Año de publicación: {book.dateOfPublication}</p>
+                      <p>Disponibilidad: {book.quantity}</p>
                     </div>
                   </div>
                   <div className="col-md-2 d-flex align-items-center">
@@ -93,6 +94,9 @@ export const UpdateBook = () => {
                         color: "white",
                         width: "100%",
                       }}
+                      onClick={()=> {
+                        setBook(book);
+                        navigate("/updatebooksecondview")}}
                     >
                       Actualizar
                     </button>

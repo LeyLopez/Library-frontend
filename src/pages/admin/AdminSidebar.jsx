@@ -43,7 +43,13 @@ export const AdminSidebar = () => {
                 style={{
                   backgroundColor: location.pathname === item.path ? "#3DDC44" : "transparent",
                 }}
-                onClick={() => {item.label==="Cerrar sesión" ? logout() && navigate(item.path) : navigate(item.path)} }
+                onClick={async() => {if (item.label === "Cerrar sesión") {
+                  await logout();
+                  navigate(item.path);
+                } else {
+                  navigate(item.path);
+                }
+              }}
               >
                 <svg className="bi pe-none me-2" width="16" height="16"></svg>
                 {item.label}
@@ -59,13 +65,6 @@ export const AdminSidebar = () => {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <img
-              src="https://github.com/mdo.png"
-              alt=""
-              width="32"
-              height="32"
-              className="rounded-circle me-2"
-            />
             <strong>Administrator</strong>
           </a>
         </div>
