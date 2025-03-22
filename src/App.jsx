@@ -21,10 +21,8 @@ import { BookDetails } from "./pages/client/BookDetailsClient";
 import { ClientSidebar } from "./pages/client/ClientSidebar";
 import { AdminSidebar } from "./pages/admin/AdminSidebar";
 import { BookDetailsAdmin } from "./pages/admin/BookDetailsAdmin";
-import { useContext } from "react";
-import { AuthContext, AuthProvider, useAuth } from "./contexts/AuthProvider";
-import { ProtectedRoutes } from "./components/ProtectedRoutes";
 import { BookProvider } from "./contexts/BookProvider";
+import { useAuth } from "./contexts/AuthProvider";
 
 function App() {
   const { isAuthenticated, roles } = useAuth();

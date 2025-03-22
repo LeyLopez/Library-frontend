@@ -6,7 +6,7 @@ export const BookDetails = () => {
 
   const [alertMessage, setalertMessage] = useState("");
 
-  const { book } = useContext(BookContext);
+  const { book, author, genre } = useContext(BookContext);
 
 
   const handleClick = ({btn}) => {
@@ -48,9 +48,9 @@ export const BookDetails = () => {
                   <p className="card-text">
                     Resumen  {book.description}
                   </p>
-                  <p>Autor: {book.author}</p>
+                  <p>Autor: {author.name}</p>
                   <p>Año de publicación: {book.dateOfPublication}</p>
-                  <p>Género: {book.genre}</p>
+                  <p>Género: {genre.name}</p>
                 </div>
               </div>
             </div>

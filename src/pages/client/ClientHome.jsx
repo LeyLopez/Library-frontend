@@ -8,11 +8,12 @@ import axios from "axios";
 export const ClientHome = () => {
   const navigate = useNavigate();
 
-  const { setBook } = useContext(BookContext);
+  const { setBook, setAuthor, setGenre } = useContext(BookContext);
 
   // Lista de libros
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState({});
+  const [genres, setGenres] = useState([]);
 
   // Obtener libros
   const getBooks = async () => {
@@ -35,6 +36,16 @@ export const ClientHome = () => {
     }
   };
 
+  const getGenre = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/genero/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error al obtener el género", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     getBooks();
   }, []);
@@ -51,6 +62,21 @@ export const ClientHome = () => {
     };
     if (books.length>0){
       fetchAuthors();
+    }
+  }, [books]);
+
+  useEffect(() => {
+    const fetchGenres = async () => {
+      const genresData = {};
+      for (const book of books) {
+        if(!genresData[book.genre]) {
+          genresData[book.genre] = await getGenre(book.genre);
+        }
+      }
+      setGenres((prev)=>({...prev, ...genresData}));  
+    };
+    if (books.length>0){
+      fetchGenres();
     }
   }, [books]);
 
@@ -95,6 +121,7 @@ export const ClientHome = () => {
                     <p className="card-text">{book.description}</p>
                     <p>Autor: {authors[book.author]?.name || "Cargando..."}</p>
                     <p>Año de publicación: {book.dateOfPublication}</p>
+                    <p>Género: {genres[book.genre]?.name || "Cargando..."}</p>
                   </div>
                 </div>
                 <div className="col-md-2 d-flex align-items-center">
@@ -109,6 +136,8 @@ export const ClientHome = () => {
                     }}
                     onClick={() => {
                       setBook(book);
+                      setAuthor(authors[book.author]);
+                      setGenre(genres[book.genre]);
                       navigate("/clientbookdetails");
                     }}
                   >

@@ -1,42 +1,61 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Navbar } from "../../components/Navbar";
 import { SortBookBy } from "../../components/SortBookBy";
 import { AdminSidebar } from "./AdminSidebar";
 import { useNavigate } from "react-router-dom";
+import { BookContext } from "../../contexts/BookProvider";
+import { bookService } from "../../api/bookService";
 
 export const BookList = () => {
 
   const navigate = useNavigate();
 
-  const books = [
-    {
-      id: 1,
-      title: "Cien años de soledad",
-      author: "Gabriel García Márquez",
-      year: 1967,
-      description:
-        "Una novela mágica que cuenta la historia de la familia Buendía en el pueblo ficticio de Macondo.",
-      image: "cienaniossoledad.jpg",
-    },
-    {
-      id: 2,
-      title: "Don Quijote de la Mancha",
-      author: "Miguel de Cervantes",
-      year: 1605,
-      description:
-        "Las aventuras de un caballero idealista y su fiel escudero en la España del Siglo de Oro.",
-      image: "donquijote.jpg",
-    },
-    {
-      id: 3,
-      title: "1984",
-      author: "George Orwell",
-      year: 1949,
-      description:
-        "Una distopía que explora la vigilancia, el totalitarismo y el control del pensamiento.",
-      image: "1984.jpg",
-    },
-  ];
+  const {setBook, setAuthor} = useContext(BookContext); 
+
+  const [books, setBooks] = useState([]);
+  const [authors, setAuthors] = useState({});
+
+  const getBooks = async () => {
+    try {
+      const response = await bookService.getAllBooks();
+      setBooks(response.data);
+    } catch (error) {
+      console.error("Error al obtener los libros", error);
+    }
+  }
+
+  
+  const getAuthor = async (id) => {
+      try {
+        const response = await authorService.getAuthorById(id);
+        return response.data;
+      } catch (error) {
+        console.error("Error al obtener el autor", error);
+        return null;
+      }
+    };
+
+  useEffect(() => {
+      getBooks();
+  }, []);
+
+  useEffect(()=>{
+    const fetchAuthors = async () => {
+      const authorsData = {};
+      for (const book of books) {
+        if(!authorsData[book.author]) {
+          authorsData[book.author] = await getAuthor(book.author);
+        }
+      }
+      setAuthors((prev)=>({...prev, ...authorsData}));  
+    };
+    if (books.length>0){
+      fetchAuthors();
+    }
+  }, [books]);
+
+
+  
 
   return (
     <>
@@ -97,7 +116,10 @@ export const BookList = () => {
                         width: "100%",
                         
                       }}
-                      onClick={() => navigate("/adminbookdetails")}
+                      onClick={() => {
+                        setBook(book);
+                        setAuthor(authors[book.author]);
+                        navigate("/adminbookdetails")}}
                     >
                       Detalles 
                     </button>

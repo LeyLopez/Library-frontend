@@ -45,7 +45,14 @@ export const ClientSidebar = () => {
                 style={{
                   backgroundColor: location.pathname === item.path ? "#3DDC44" : "transparent",
                 }}
-                onClick={() => {item.label === "Cerrar sesión" ? logout() && navigate(item.path) : navigate(item.path)}}
+                onClick={async () => {
+                  if (item.label === "Cerrar sesión") {
+                    await logout();
+                    navigate(item.path);
+                  } else {
+                    navigate(item.path);
+                  }
+                }}
               >
                 <svg className="bi pe-none me-2" width="16" height="16"></svg>
                 {item.label}
