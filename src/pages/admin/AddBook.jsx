@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { OptionsButton } from "../../components/OptionsButton";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ModalAddAuthor } from "../../components/ModalAddAuthor";
 
 export const AddBook = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const navigate = useNavigate();
   const [authors, setAuthors] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [newAuthor, setNewAuthor] = useState("");
-  const [newGenre, setNewGenre] = useState("");
+
+  const [openModal, setOpenModal] = useState(false);
 
   const [newBook, setNewBook] = useState({
     title: "",
@@ -20,6 +21,10 @@ export const AddBook = () => {
     coverPage: "",
     genre: 0,
   });
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -44,10 +49,6 @@ export const AddBook = () => {
     e.preventDefault();
     setAlertMessage("");
 
-    if (!newBook.title || !newBook.author || !newBook.dateOfPublication) {
-      setAlertMessage("Por favor completa los campos obligatorios");
-      return;
-    }
 
     try {
       const response = await axios.post(
@@ -76,31 +77,10 @@ export const AddBook = () => {
   };
 
 
-  const handleAddAuthor = async () => {
-    if (!newAuthor) return;
-    try {
-      const response = await axios.post("http://localhost:8080/api/autor", { name: newAuthor });
-      setAuthors([...authors, response.data]);
-      setNewBook((prev) => ({ ...prev, author: response.data.id }));
-      setNewAuthor("");
-    } catch (error) {
-      console.error("Error adding author", error);
-    }
-  };
-
-  const handleAddGenre = async () => {
-    if (!newGenre) return;
-    try {
-      const response = await axios.post("http://localhost:8080/api/genero", { name: newGenre });
-      setGenres([...genres, response.data]);
-      setNewBook((prev) => ({ ...prev, genre: response.data.id }));
-      setNewGenre("");
-    } catch (error) {
-      console.error("Error adding genre", error);
-    }
-  };
 
   return (
+    <>
+    
     <div
       className="d-flex justify-content-center py-5"
       style={{
@@ -128,44 +108,41 @@ export const AddBook = () => {
               className="form-control"
               value={newBook.title}
               onChange={handleInputChange}
+              required
             />
           </div>
+          
           <div className="col-md-5">
-            <label className="form-label">Autor</label>
-            <select className="form-select" name="author" value={newBook.author} onChange={handleInputChange}>
-              <option value="0">Seleccione un autor</option>
-              {authors.map((author) => (
-                <option key={author.id} value={author.id}>{author.name}</option>
-              ))}
-            </select>
-            <div className="input-group mb-3">
-            <input type="text" placeholder="Nuevo autor" className="form-control" value={newAuthor} onChange={(e) => setNewAuthor(e.target.value)} />
-            <button type="button" className="btn btn-outline-secondary" onClick={handleAddAuthor}>Agregar autor</button>
-            </div>
+            <label className="form-label">Resumen</label>
+            <input
+              type="text"
+              name="description"
+              className="form-control"
+              value={newBook.description}
+              onChange={handleInputChange}
+              required
+            />
           </div>
 
           <div className="col-md-5">
             <label className="form-label">Fecha de publicación</label>
             <input
-              type="text"
+              type="date"
               name="dateOfPublication"
               className="form-control"
               value={newBook.dateOfPublication}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="col-md-5">
             <label className="form-label">Género</label>
-            <select className="form-select" name="genre" value={newBook.genre} onChange={handleInputChange}>
+            <select className="form-select" name="genre" value={newBook.genre} onChange={handleInputChange} required>
               <option value="0">Seleccione un género</option>
               {genres.map((genre) => (
                 <option key={genre.id} value={genre.id}>{genre.name}</option>
               ))}
             </select>
-            <div className="input-group mb-3">
-            <input type="text" placeholder="Nuevo género" className = "form-control" value={newGenre} onChange={(e) => setNewGenre(e.target.value)} />
-            <button type="button" className="btn btn-outline-secondary" onClick={handleAddGenre}>Agregar género</button>
-            </div>
           </div>
           <div className="col-md-5">
             <label className="form-label">Cantidades disponibles</label>
@@ -185,18 +162,23 @@ export const AddBook = () => {
               className="form-control"
               value={newBook.coverPage}
               onChange={handleInputChange}
+              required
             />
           </div>
+          
           <div className="col-md-5">
-            <label className="form-label">Resumen</label>
-            <input
-              type="text"
-              name="description"
-              className="form-control"
-              value={newBook.description}
-              onChange={handleInputChange}
-            />
+            <label className="form-label">Autor</label>
+            <select className="form-select" name="author" value={newBook.author} onChange={handleInputChange}>
+              <option value="0">Seleccione un autor</option>
+              {authors.map((author) => (
+                <option key={author.id} value={author.id}>{author.name}</option>
+              ))}
+            </select>
+            
           </div>
+          {/* <div className="col-md-2 mt-5">
+          <button className="btn btn-outline-success" onClick={handleOpenModal}>Agregar autor</button>
+          </div> */}
         </form>
         <div style={{ marginLeft: "30%" }}>
           <button
@@ -224,6 +206,7 @@ export const AddBook = () => {
               color: "white",
               width: "20%",
             }}
+            onClick={handleSubmit}
           >
             Agregar libro
           </button>
@@ -245,5 +228,7 @@ export const AddBook = () => {
         </div>
       </div>
     </div>
+    {/* <ModalAddAuthor isOpen={openModal} onClose = {()=>setOpenModal(false)}/> */}
+    </>
   );
 };
