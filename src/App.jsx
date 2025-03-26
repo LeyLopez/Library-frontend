@@ -24,6 +24,8 @@ import { BookDetailsAdmin } from "./pages/admin/BookDetailsAdmin";
 import { BookProvider } from "./contexts/BookProvider";
 import { useAuth } from "./contexts/AuthProvider";
 import { UpdateBookSecondView } from "./pages/admin/UpdateBookSecondView";
+import { LoansList } from "./pages/admin/LoansList";
+import { ReservationList } from "./pages/admin/ReservationList";
 
 function App() {
   const { isAuthenticated, roles } = useAuth();
@@ -71,6 +73,8 @@ function App() {
               <Route path="/updatebook" element={<UpdateBook />} />
               <Route path="/adminbookdetails" element={<BookDetailsAdmin />} />
               <Route path="/updatebooksecondview" element={<UpdateBookSecondView/>}></Route>
+              <Route path="/loanslist" element={<LoansList></LoansList>}></Route>
+              <Route path="/reservationslist" element={<ReservationList></ReservationList>}></Route>
             </>
           ) : (
             <Route path="/booklist" element={<Navigate to="/login" />} />
