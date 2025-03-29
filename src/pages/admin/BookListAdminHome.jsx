@@ -4,6 +4,9 @@ import { SortBookBy } from "../../components/SortBookBy";
 import { useNavigate } from "react-router-dom";
 import { BookContext } from "../../contexts/BookProvider";
 import axios from "axios";
+import { bookService } from "../../api/bookService";
+import { authorService } from "../../api/authorService";
+import genreService from "../../api/genreService";
 
 export const BookList = () => {
 
@@ -14,12 +17,12 @@ export const BookList = () => {
   // Lista de libros
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState({});
-  const [genres, setGenres] = useState([]);
+  const [genres, setGenres] = useState({});
 
   // Obtener libros
   const getBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/libro");
+      const response = await bookService.getAllBooks();
       setBooks(response.data);
     } catch (error) {
       console.error("Error al obtener los libros", error);
@@ -29,7 +32,7 @@ export const BookList = () => {
 
   const getAuthor = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/autor/${id}`);
+      const response = await authorService.getAuthorById(id);
       return response.data;
     } catch (error) {
       console.error("Error al obtener el autor", error);
@@ -39,7 +42,7 @@ export const BookList = () => {
 
   const getGenre = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/genero/${id}`);
+      const response = await genreService.getGenreById(id);
       return response.data;
     } catch (error) {
       console.error("Error al obtener el género", error);
@@ -117,7 +120,7 @@ export const BookList = () => {
                 <div className="row g-0">
                   <div className="col-md-2">
                     <img
-                      src={book.image}
+                      src={book.coverPage}
                       alt={book.title}
                       style={{ width: "50%" }}
                     />
@@ -127,7 +130,7 @@ export const BookList = () => {
                       <h5 className="card-title">{book.title}</h5>
                       <p className="card-text">{book.description}</p>
                       <p>Autor: {authors[book.author]?.name || "Cargando..."}</p>
-                      <p>Año de publicación: {book.year}</p>
+                      <p>Año de publicación: {book.dateOfPublication}</p>
                       <p>Género: {genres[book.genre]?.name || "Cargando..."}</p>
                     </div>
                   </div>

@@ -10,7 +10,7 @@ export const bookService = {
 
     async getBookById(id){
         const book = await axios.get(`${urlBase}/${id}`);
-        return book.data;
+        return book;
     },
 
     async createBook(book){

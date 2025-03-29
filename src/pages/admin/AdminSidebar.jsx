@@ -14,8 +14,8 @@ export const AdminSidebar = () => {
     { path: "/addbook", label: "Agregar libro" },
     { path: "/deletebook", label: "Eliminar libro" },
     { path: "/updatebook", label: "Modificar libro" },
-    { path: "/loanslist", label: "Préstamos" },
-    { path: "/reservationslist", label: "Reservas" },
+    { path: "/loans", label: "Préstamos" },
+    { path: "/reservations", label: "Reservas" },
     { path: "/login", label: "Cerrar sesión" },
   ];
 
@@ -49,6 +49,7 @@ export const AdminSidebar = () => {
                   await logout();
                   navigate(item.path);
                 } else {
+                  
                   navigate(item.path);
                 }
               }}
