@@ -9,7 +9,16 @@ export const UpdateBookSecondView = () => {
   const navigate = useNavigate();
   const [authors, setAuthors] = useState([]);
   const [genres, setGenres] = useState([]);
-  const { book, setBook, genre, setGenre, author, setAuthor } = useContext(BookContext)
+  const { book } = useContext(BookContext)
+  const [newBook, setNewBook] = useState({
+          title: book.title,
+          description: book.description,
+          dateOfPublication: book.dateOfPublication,
+          quantity: book.quantity,
+          author: book.author,
+          coverPage: book.coverPage,
+          genre: book.genre,
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,13 +49,13 @@ export const UpdateBookSecondView = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/libro",
+      const response = await axios.put(
+        `http://localhost:8080/api/libro/${book.id}`,
         newBook
       );
 
       if (response.status >= 200 && response.status < 300) {
-        setAlertMessage("Libro agregado con éxito");
+        setAlertMessage("Libro actualizado con éxito");
         setNewBook({
           title: "",
           description: "",
@@ -57,11 +66,11 @@ export const UpdateBookSecondView = () => {
           genre: 0,
         });
       } else {
-        setAlertMessage("Error al agregar libro");
+        setAlertMessage("Error al actualizar libro");
       }
     } catch (error) {
-      setAlertMessage("Error al agregar libro");
-      console.error("Error al agregar libro", error);
+      setAlertMessage("Error al actualizar libro");
+      console.error("Error al actualizar libro", error);
     }
   };
 
@@ -94,13 +103,13 @@ export const UpdateBookSecondView = () => {
               type="text"
               name="title"
               className="form-control"
-              value={book.title}
+              value={newBook.title}
               onChange={handleInputChange}
             />
           </div>
           <div className="col-md-5">
             <label className="form-label">Autor</label>
-            <select className="form-select" name="author" value={book.author} onChange={handleInputChange}>
+            <select className="form-select" name="author" value={newBook.author} onChange={handleInputChange}>
               <option value="0">Seleccione un autor</option>
               {authors.map((author) => (
                 <option key={author.id} value={author.id}>{author.name}</option>
@@ -114,13 +123,13 @@ export const UpdateBookSecondView = () => {
               type="text"
               name="dateOfPublication"
               className="form-control"
-              value={book.dateOfPublication}
+              value={newBook.dateOfPublication}
               onChange={handleInputChange}
             />
           </div>
           <div className="col-md-5">
             <label className="form-label">Género</label>
-            <select className="form-select" name="genre" value={book.genre} onChange={handleInputChange}>
+            <select className="form-select" name="genre" value={newBook.genre} onChange={handleInputChange}>
               <option value="0">Seleccione un género</option>
               {genres.map((genre) => (
                 <option key={genre.id} value={genre.id}>{genre.name}</option>
@@ -133,7 +142,7 @@ export const UpdateBookSecondView = () => {
               type="text"
               name="quantity"
               className="form-control"
-              value={book.quantity}
+              value={newBook.quantity}
               onChange={handleInputChange}
             />
           </div>
@@ -143,7 +152,7 @@ export const UpdateBookSecondView = () => {
               type="text"
               name="coverPage"
               className="form-control"
-              value={book.coverPage}
+              value={newBook.coverPage}
               onChange={handleInputChange}
             />
           </div>
@@ -153,7 +162,7 @@ export const UpdateBookSecondView = () => {
               type="text"
               name="description"
               className="form-control"
-              value={book.description}
+              value={newBook.description}
               onChange={handleInputChange}
             />
           </div>
@@ -184,8 +193,9 @@ export const UpdateBookSecondView = () => {
               color: "white",
               width: "20%",
             }}
+            onClick={handleSubmit}
           >
-            Agregar libro
+            Actualizar
           </button>
           <div>
             {alertMessage && (

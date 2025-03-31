@@ -21,10 +21,10 @@ import { useNavigate } from "react-router-dom";
       username: user.username ,
       kindOfDocument: user.kindOfDocument,
       documentNumber: user.documentNumber,
-      dateOfBirth: formatDate(user.dateOfBirth),
+      dateOfBirth: new Date(user.dateOfBirth).toISOString().split('T')[0],
       phoneNumber: user.phoneNumber,
       address: user.address,
-      
+      password: user.password
     });
 
     const [error, setError] = useState("");
@@ -53,7 +53,8 @@ import { useNavigate } from "react-router-dom";
             documentNumber: user.documentNumber,
             dateOfBirth: user.dateOfBirth,
             phoneNumber: user.phoneNumber,
-            address: user.address
+            address: user.address,
+            password: user.password
           });
           setTimeout(() => navigate("/clienthome"), 2000);
         }else{
@@ -101,7 +102,7 @@ import { useNavigate } from "react-router-dom";
             </div>
             <div className="col-md-5">
               <label className="form-label">Fecha de nacimiento</label>
-              <input type="date" className="form-control" name="dateOfBirth" onChange={handleInputChange} value={formData.dateOfBirth}/>
+              <input type="date" className="form-control" name="dateOfBirth" onChange={handleInputChange} value={formData.dateOfBirth} disabled/>
             </div>
             <div className="col-md-5">
               <label className="form-label">Teléfono</label>
@@ -124,7 +125,7 @@ import { useNavigate } from "react-router-dom";
               </div>
             <div className="col-md-5">
               <label className="form-label">Número de documento</label>
-              <input type="number" className="form-control" name="documentNumber" onChange={handleInputChange} value={formData.documentNumber}/>
+              <input type="number" className="form-control" name="documentNumber" onChange={handleInputChange} value={formData.documentNumber} disabled/>
             </div>
             {error && <div className="alert alert-danger">{error}</div>}
             {successMessage && <div className="alert alert-success">{successMessage}</div>}

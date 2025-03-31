@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const urlBase = 'http://localhost:8080/api/autor';
 
-export const authorService = {
+const authorService = {
     async getAllAuthors() {
         return axios.get(urlBase);
     },
@@ -19,3 +19,5 @@ export const authorService = {
 
 
 }
+
+export default authorService;

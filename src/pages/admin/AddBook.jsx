@@ -208,7 +208,7 @@ export const AddBook = () => {
             }}
             onClick={handleSubmit}
           >
-            Agregar libro
+            Agregar
           </button>
           <div>
             {alertMessage && (

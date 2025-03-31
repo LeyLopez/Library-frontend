@@ -9,8 +9,7 @@ import { ClientHome } from "./pages/client/ClientHome";
 import { RecoverPassword } from "./pages/RecoverPassword";
 import { ClientData } from "./pages/client/ClientData";
 import { RecoverPasswordAuth } from "./pages/RecoverPasswordAuth";
-import { ClientLoans } from "./pages/client/ClientLoans";
-import { ClientReservations } from "./pages/client/ClientReservations";
+import { ClientHistorial} from "./pages/client/ClienHistorial";
 import { DeleteAccount } from "./pages/client/DeleteAccount";
 import { BookList } from "./pages/admin/BookListAdminHome";
 import { AddBook } from "./pages/admin/AddBook";
@@ -51,8 +50,8 @@ function App() {
                 path="/recoverpasswordauth"
                 element={<RecoverPasswordAuth />}
               />
-              <Route path="/myloans" element={<ClientLoans />} />
-              <Route path="/myreservations" element={<ClientReservations />} />
+              <Route path="/myloans" element={<ClientHistorial type={"prestamo"} />} />
+              <Route path="/myreservations" element={<ClientHistorial type={"reserva"} />} />
               <Route path="/deletemyaccount" element={<DeleteAccount />} />
               <Route
                 path="/clientnotifications"
@@ -72,8 +71,8 @@ function App() {
               <Route path="/updatebook" element={<UpdateBook />} />
               <Route path="/adminbookdetails" element={<BookDetailsAdmin />} />
               <Route path="/updatebooksecondview" element={<UpdateBookSecondView/>}></Route>
-              <Route path="/loans" element={<RecordsList type={"loan"}></RecordsList>}></Route>
-              <Route path="/reservationS" element={<RecordsList type={"reservation"}></RecordsList>}></Route>
+              <Route path="/loans" element={<RecordsList type={"prestamo"}></RecordsList>}></Route>
+              <Route path="/reservationS" element={<RecordsList type={"reserva"}></RecordsList>}></Route>
             </>
           ) : (
             <Route path="/booklist" element={<Navigate to="/login" />} />

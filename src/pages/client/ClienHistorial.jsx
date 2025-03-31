@@ -4,53 +4,45 @@ import { ModalWarning } from "../../components/ModalWarning";
 import { useAuth } from "../../contexts/AuthProvider";
 import axios from "axios";
 
-export const ClientReservations = () => {
+export const ClientHistorial = ({type}) => {
   // Lista de reservas
-  const [reservations, setReservations] = useState([]);
+  const [historial, setHistorial] = useState([]);
   const [books, setBooks] = useState({});
 
   const { user } = useAuth();
 
   // Obtener reservas
-  const getReservations = async () => {
-    try {
-      // Petición GET al servidor
-      const response = await axios.get(`http://localhost:8080/api/reserva/user/${user.id}`);
-      setReservations(response.data);
-    } catch (error) {
-      console.error("Error al obtener las reservas", error);
-    }
-  };
-
-  const getBook = async (id) => {
-    try {
-      // Petición GET al servidor
-      const response = await axios.get(`http://localhost:8080/api/libro/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error("Error al obtener el libro", error);
-      return null;
-    }
-  }
-
   useEffect(() => {
-    getReservations();
-  }, []);
+    const fetchHistorial = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/${type}/user/${user.id}`);
+        setHistorial(response.data);
+      } catch (error) {
+        console.error("Error al obtener los registros", error);
+      }
+    };
+    fetchHistorial();
+  }, [type, user.id]);
 
   useEffect(() => {
     const fetchBooks = async () => {
       const booksData = {};
-      for (const reservation of reservations) {
-        if(!booksData[reservation.book]) {
-          booksData[reservation.book] = await getBook(reservation.book);
+      await Promise.all(historial.map(async (item) => {
+        if (!booksData[item.book]) {
+          try {
+            const response = await axios.get(`http://localhost:8080/api/libro/${item.book}`);
+            booksData[item.book] = response.data;
+          } catch (error) {
+            console.error("Error al obtener el libro", error);
+          }
         }
-      }
-      setBooks((prev)=>({...prev, ...booksData}));
-    }
-    if (reservations.length>0){
+      }));
+      setBooks((prev) => ({ ...prev, ...booksData }));
+    };
+    if (historial.length > 0) {
       fetchBooks();
     }
-  }, [reservations]);
+  }, [historial]);
 
 
 
@@ -81,7 +73,7 @@ export const ClientReservations = () => {
       }}
     >
       <div className="col-md-9">
-        <OptionsButton title={"Mis reservas"} />
+        <OptionsButton title={`Mis ${type}s`} />
         <br />
         {alertMessage && (
             <div className="alert alert-warning">{alertMessage}</div>
@@ -90,9 +82,9 @@ export const ClientReservations = () => {
           className="container"
           style={{ position: "relative", maxWidth: "90%" }}
         >
-          {reservations.map((reservation) => (
+          {historial.map((item) => (
             <div
-              key={reservation.id}
+              key={item.id}
               className="card mb-3"
               style={{
                 border: "none",
@@ -113,22 +105,23 @@ export const ClientReservations = () => {
               <div className="row g-0">
                 <div className="col-md-2">
                   <img
-                    src={books[reservation.book]?.coverPage}
-                    alt={books[reservation.book]?.title}
+                    src={books[item.book]?.coverPage}
+                    alt={books[item.book]?.title}
                     style={{ width: "50%" }}
                   />
                 </div>
                 <div className="col-md-8">
                   <div className="card-body">
-                    <h5 className="card-title">{books[reservation.book]?.title || "Cargando..."}</h5>
-                    <p className="card-text">{books[reservation.book]?.description || "Cargando..."}</p>
-                    <p>Fecha de reserva: {reservation.reservationDate}</p>
+                    <h5 className="card-title">{books[item.book]?.title || "Cargando..."}</h5>
+                    <p className="card-text">{books[item.book]?.description || "Cargando..."}</p>
+                    <p>Fecha de {type}: {type==="reserva" ? item.reservationDate: item.loanDate}</p>
                     <p>
-                      Fecha de vencimiento de reserva: {reservation.reservationEndDate}
+                      Fecha de vencimiento de {type}: {type==="reserva" ? item.reservationEndDate : item.devolutionDate}
                     </p>
-                    <p>Estado: {reservation.status}</p>
+                    <p>Estado: {item.status}</p>
                   </div>
                 </div>
+                {type==="reserva" && 
                 <div className="col-md-2 d-flex align-items-center">
                   <button
                     type="button"
@@ -144,6 +137,7 @@ export const ClientReservations = () => {
                     Cancelar
                   </button>
                 </div>
+                }
               </div>
               <hr />
             </div>

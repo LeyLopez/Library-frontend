@@ -4,9 +4,6 @@ import { SortBookBy } from "../../components/SortBookBy";
 import { useNavigate } from "react-router-dom";
 import { BookContext } from "../../contexts/BookProvider";
 import axios from "axios";
-import { bookService } from "../../api/bookService";
-import { authorService } from "../../api/authorService";
-import genreService from "../../api/genreService";
 
 export const BookList = () => {
 
@@ -22,7 +19,7 @@ export const BookList = () => {
   // Obtener libros
   const getBooks = async () => {
     try {
-      const response = await bookService.getAllBooks();
+      const response = await axios.get("http://localhost:8080/api/libro");
       setBooks(response.data);
     } catch (error) {
       console.error("Error al obtener los libros", error);
@@ -32,7 +29,7 @@ export const BookList = () => {
 
   const getAuthor = async (id) => {
     try {
-      const response = await authorService.getAuthorById(id);
+      const response = await axios.get(`http://localhost:8080/api/autor/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error al obtener el autor", error);
@@ -42,7 +39,7 @@ export const BookList = () => {
 
   const getGenre = async (id) => {
     try {
-      const response = await genreService.getGenreById(id);
+      const response = await axios.get(`http://localhost:8080/api/genero/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error al obtener el género", error);
