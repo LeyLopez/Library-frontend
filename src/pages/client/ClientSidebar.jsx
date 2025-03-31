@@ -15,7 +15,7 @@ export const ClientSidebar = () => {
     { path: "/myreservations", label: "Mis reservas" },
     { path: "/clientdata", label: "Mis datos" },
     { path: "/recoverpasswordauth", label: "Cambiar contraseña" },
-    { path: "/deletemyaccount", label: "Eliminar cuenta" },
+    // { path: "/deletemyaccount", label: "Eliminar cuenta" },
     { path: "/login", label: "Cerrar sesión" },
   ];
 
