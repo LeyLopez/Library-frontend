@@ -7,6 +7,7 @@ import axios from "axios";
 
 export const ClientHome = () => {
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { setBook, setAuthor, setGenre } = useContext(BookContext);
 
@@ -14,6 +15,10 @@ export const ClientHome = () => {
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState({});
   const [genres, setGenres] = useState([]);
+
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   // Obtener libros
   const getBooks = async () => {
@@ -82,10 +87,58 @@ export const ClientHome = () => {
 
   return (
     <>
-      <Navbar />
+      <div style={{position:"relative", top:"150px"}}>
+      <nav className="navbar navbar-expand" aria-label="Second navbar example">
+        <div className="container">
+          <div className="collapse navbar-collapse">
+            <ul className="navbar-nav me-5">
+              <li className="nav-item">
+                <a className="nav-link active" href="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-list"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="#">
+                  Opciones
+                </a>
+              </li>
+            </ul>
+            <form
+              role="search"
+              style={{
+                position: "relative",
+                width: "90%",
+              }}
+            >
+              <input
+                type="search"
+                className="form-control"
+                placeholder="Ingresa aquí el nombre del libro que deseas buscar..."
+                aria-label="Search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </form>
+
+          </div>
+        </div>
+      </nav>
+    </div>
 
       <div>
-        <SortBookBy />
+        {/* <SortBookBy /> */}
         <div
           className="container"
           style={{
@@ -96,7 +149,7 @@ export const ClientHome = () => {
             top: "150px",
           }}
         >
-          {books.map((book) => (
+          {filteredBooks.map((book) => (
             <div
               key={book.id}
               className="card mb-3"

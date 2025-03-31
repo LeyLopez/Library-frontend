@@ -46,7 +46,7 @@ export const Navbar = () => {
                 aria-label="Search"
               />
             </form>
-            <ul className="navbar-nav px-5">
+            {/* <ul className="navbar-nav px-5">
               <li className="nav-item">
                 <button type="button" className="btn position-relative" onClick={() => navigate("/clientnotifications")}>
                   Notificaciones
@@ -55,7 +55,7 @@ export const Navbar = () => {
                   </span>
                 </button>
               </li>
-            </ul>
+            </ul> */}
           </div>
         </div>
       </nav>

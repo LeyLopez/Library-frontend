@@ -11,7 +11,7 @@ export const Login = () => {
     password: ""
   })
 
-  const [error, setError] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
 
 
   const showError = (error) => {
@@ -31,13 +31,21 @@ export const Login = () => {
 
   const handleLogin = async() => {
     try {
-      await login(loginRequest); // Ejecutar la función de login
-      
+      const response = await login(loginRequest); // Ejecutar la función de login
+      if (response.status === 200) {
+        setAlertMessage("Iniciando sesión...");
+      }else{
+        setAlertMessage("Error al iniciar sesión, verifica las credenciales");
+        showError('Error al iniciar sesión, verifica las credenciales');
+        setTimeout(()=>{
+            setAlertMessage("");
+        }, 5000);
+      }
     } catch (error) {
-      setError("Error al iniciar sesión, verifica las credenciales");
+      setAlertMessage("Error al iniciar sesión, verifica las credenciales");
       showError('Error al iniciar sesión, verifica las credenciales');
       setTimeout(()=>{
-          setError(null);
+          setAlertMessage("");
       }, 5000);
     }
   };
@@ -106,6 +114,7 @@ export const Login = () => {
               >
                 Quiero registrarme
               </button>
+              {alertMessage && <div className="alert alert-warning" style={{ marginTop: "10px" }}>{alertMessage}</div>}
             </form>
           </div>
         </div>

@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/AuthProvider";
 export const ClientSidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  
 
   const {logout} = useAuth();
 
@@ -64,11 +65,11 @@ export const ClientSidebar = () => {
         <div className="dropdown">
           <a
             href="#"
-            className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
-            data-bs-toggle="dropdown"
+            className="d-flex align-items-center link-body-emphasis text-decoration-none"
             aria-expanded="false"
+            onClick={()=>navigate("/clientdata")}
           >
-            <strong>Client</strong>
+            <strong>Cliente</strong>
           </a>
         </div>
       </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthProvider";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { OptionsButton } from "../components/OptionsButton";
 
 export const RecoverPasswordAuth = () => {
   const [alertMessage, setAlertMessage] = useState("");
@@ -69,7 +70,7 @@ export const RecoverPasswordAuth = () => {
       }}
     >
       <div className="col-md-9">
-        <h2 className="h3 mb-3">Cambiar contraseña</h2>
+        <OptionsButton title={"Cambiar contraseña"}></OptionsButton>
         {alertMessage && <div className="alert alert-warning">{alertMessage}</div>}
         <form className="row g-3" style={{ position: "relative" }} onSubmit={handleRecoverPassword}>
           <div className="col-md-5">

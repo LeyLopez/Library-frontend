@@ -3,7 +3,7 @@ import { useAuth } from "../../contexts/AuthProvider";
 
 export const AdminSidebar = () => {
 
-  const { logout } = useAuth();
+  const { logout} = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -64,11 +64,10 @@ export const AdminSidebar = () => {
         <div className="dropdown">
           <a
             href="#"
-            className="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
-            data-bs-toggle="dropdown"
+            className="d-flex align-items-center link-body-emphasis text-decoration-none"
             aria-expanded="false"
           >
-            <strong>Administrator</strong>
+            <strong>Administrador</strong>
           </a>
         </div>
       </div>
