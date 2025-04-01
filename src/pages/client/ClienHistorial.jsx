@@ -8,8 +8,44 @@ export const ClientHistorial = ({type}) => {
   // Lista de reservas
   const [historial, setHistorial] = useState([]);
   const [books, setBooks] = useState({});
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [selectedReservation, setSelectedReservation] = useState(null);
 
   const { user } = useAuth();
+
+  // Cancelar reserva
+  const deleteReservation = async () => {
+    if (!selectedReservation) return;
+    const today = new Date();    
+    try {
+      if(selectedReservation.status !== "FINALIZADO" && selectedReservation.status !== "VENCIDO" && selectedReservation.status !== "CANCELADO") {
+        const updatedReserva = {
+          id: selectedReservation.id,
+          reservationDate: selectedReservation.reservationDate,
+          reservationEndDate: selectedReservation.reservationEndDate,
+          statusChangeDate: today.toISOString().split("T")[0],
+          user: selectedReservation.user,
+          book: selectedReservation.book,
+          status: "CANCELADO"
+        };
+        const response = await axios.put(`http://localhost:8080/api/${type}/${selectedReservation.id}`, updatedReserva);
+        if(response.status === 200) {
+          setAlertMessage("Reserva cancelada con éxito.");
+          setHistorial((prev) => prev.map(item => item.id === selectedReservation.id ? updatedReserva : item));
+        } else {
+          setAlertMessage("Error al cancelar la reserva.");
+        }
+        setTimeout(() => {
+          setAlertMessage("");
+        }, 4000);
+      }
+    } catch (error) {
+      console.error("Error al cancelar la reserva", error);
+      setAlertMessage("Error en el servidor, intenté más tarde.");
+    }
+    closeCancelModal();
+  }
 
   // Obtener reservas
   useEffect(() => {
@@ -44,21 +80,13 @@ export const ClientHistorial = ({type}) => {
     }
   }, [historial]);
 
-
-
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(null);
-
-  const openCancelModal = () => setIsCancelModalOpen(true);
-  const closeCancelModal = () => setIsCancelModalOpen(false);
-
-  const handleCancelReservation = () => {
-    closeCancelModal();
-    setAlertMessage("Cancelando reserva");
-
-    setTimeout(() => {
-      setAlertMessage("Reservación cancelada con éxito.");
-    }, 2000);
+  const openCancelModal = (res) => {
+    setSelectedReservation(res);
+    setIsCancelModalOpen(true);
+  };
+  const closeCancelModal = () => {
+    setIsCancelModalOpen(false);
+    setSelectedReservation(null);
   };
 
   return (
@@ -98,7 +126,7 @@ export const ClientHistorial = ({type}) => {
                 message={"¿Está seguro que desea cancelar la reserva?"}
                 isOpen={isCancelModalOpen}
                 onClose={closeCancelModal}
-                onConfirm={handleCancelReservation}
+                onConfirm={deleteReservation}
               ></ModalWarning>
               
               <br />
@@ -132,7 +160,7 @@ export const ClientHistorial = ({type}) => {
                       backgroundColor: "#14AE5C",
                       color: "white",
                     }}
-                    onClick={openCancelModal}
+                    onClick={() => openCancelModal(item)}
                   >
                     Cancelar
                   </button>
