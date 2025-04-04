@@ -21,7 +21,7 @@ export const DeleteBook = () => {
 
   const getBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/libro");
+      const response = await axios.get("https://charming-happiness-production.up.railway.app/api/libro");
       setBooks(response.data);
     } catch (error) {
       console.error("Error al obtener los libros", error);
@@ -38,7 +38,7 @@ export const DeleteBook = () => {
 
     setAlertMessage("Eliminando libro...");
     try {
-      await axios.delete(`http://localhost:8080/api/libro/${selectedBook.id}`);
+      await axios.delete(`https://charming-happiness-production.up.railway.app/api/libro/${selectedBook.id}`);
       setAlertMessage(`El libro "${selectedBook.title}" ha sido eliminado exitosamente.`);
       setBooks((prevBooks) => prevBooks.filter((book) => book.id !== selectedBook.id));
     } catch (error) {

@@ -11,7 +11,7 @@ export const ClientLoans = () => {
   const getLoans = async () => {
     try {
       // Petición GET al servidor
-      const response = await axios.get(`http://localhost:8080/api/prestamo/user/${user.id}`);
+      const response = await axios.get(`https://charming-happiness-production.up.railway.app/api/prestamo/user/${user.id}`);
       setLoans(response.data);
     } catch (error) {
       console.error("Error al obtener los préstamos", error);

@@ -34,8 +34,8 @@ export const AddBook = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const authorsResponse = await axios.get("http://localhost:8080/api/autor");
-        const genresResponse = await axios.get("http://localhost:8080/api/genero");
+        const authorsResponse = await axios.get("https://charming-happiness-production.up.railway.app/api/autor");
+        const genresResponse = await axios.get("https://charming-happiness-production.up.railway.app/api/genero");
         setAuthors(authorsResponse.data);
         setGenres(genresResponse.data);
       } catch (error) {
@@ -52,7 +52,7 @@ export const AddBook = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/libro",
+        "https://charming-happiness-production.up.railway.app/api/libro",
         newBook
       );
 

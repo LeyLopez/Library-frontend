@@ -15,7 +15,7 @@ export const ClientReservations = () => {
   const getReservations = async () => {
     try {
       // Petición GET al servidor
-      const response = await axios.get(`http://localhost:8080/api/reserva/user/${user.id}`);
+      const response = await axios.get(`https://charming-happiness-production.up.railway.app/api/reserva/user/${user.id}`);
       setReservations(response.data);
     } catch (error) {
       console.error("Error al obtener las reservas", error);
@@ -25,7 +25,7 @@ export const ClientReservations = () => {
   const getBook = async (id) => {
     try {
       // Petición GET al servidor
-      const response = await axios.get(`http://localhost:8080/api/libro/${id}`);
+      const response = await axios.get(`https://charming-happiness-production.up.railway.app/api/libro/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error al obtener el libro", error);

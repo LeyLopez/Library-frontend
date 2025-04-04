@@ -28,8 +28,8 @@ export const UpdateBookSecondView = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const authorsResponse = await axios.get("http://localhost:8080/api/autor");
-        const genresResponse = await axios.get("http://localhost:8080/api/genero");
+        const authorsResponse = await axios.get("https://charming-happiness-production.up.railway.app/api/autor");
+        const genresResponse = await axios.get("https://charming-happiness-production.up.railway.app/api/genero");
         setAuthors(authorsResponse.data);
         setGenres(genresResponse.data);
       } catch (error) {
@@ -50,7 +50,7 @@ export const UpdateBookSecondView = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:8080/api/libro/${book.id}`,
+        `https://charming-happiness-production.up.railway.app/api/libro/${book.id}`,
         newBook
       );
 

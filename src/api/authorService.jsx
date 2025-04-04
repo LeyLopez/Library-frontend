@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const urlBase = 'http://localhost:8080/api/autor';
+const urlBase = 'https://charming-happiness-production.up.railway.app/api/autor';
 
 const authorService = {
     async getAllAuthors() {
@@ -21,3 +21,4 @@ const authorService = {
 }
 
 export default authorService;
+    

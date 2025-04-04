@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const urlBase = 'http://localhost:8080/api/prestamo';
+const urlBase = 'https://charming-happiness-production.up.railway.app/api/prestamo';
 
 const loansService = {
 

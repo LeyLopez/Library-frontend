@@ -37,7 +37,7 @@ export const SignUp = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/api/auth/signup", formData);
+      const response = await axios.post("https://charming-happiness-production.up.railway.app/api/auth/signup", formData);
 
       if (response.status >= 200 && response.status < 300) {
         setSuccessMessage("Usuario registrado con éxito. Ahora puede iniciar sesión.");

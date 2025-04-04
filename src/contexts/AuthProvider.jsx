@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (loginRequest) => {
     try {
       console.log(loginRequest);
-      const { data } = await axios.post("http://localhost:8080/api/auth/login", loginRequest);
+      const { data } = await axios.post("https://charming-happiness-production.up.railway.app/api/auth/login", loginRequest);
       console.log(data);
 
 

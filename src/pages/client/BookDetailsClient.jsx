@@ -37,7 +37,7 @@ export const BookDetails = () => {
     }
 
     try {
-      const response = await axios.post(`http://localhost:8080/api/${type}`, requestData);
+      const response = await axios.post(`https://charming-happiness-production.up.railway.app/api/${type}`, requestData);
 
       if (response.status >= 200 && response.status < 300) {
         setAlertMessage(`El libro "${book.title}" ha sido ${type === "reserva" ? "reservado" : "prestado"} exitosamente.`);

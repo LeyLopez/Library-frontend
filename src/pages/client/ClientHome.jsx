@@ -23,7 +23,7 @@ export const ClientHome = () => {
   // Obtener libros
   const getBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/libro");
+      const response = await axios.get("https://charming-happiness-production.up.railway.app/api/libro");
       setBooks(response.data);
     } catch (error) {
       console.error("Error al obtener los libros", error);
@@ -33,7 +33,7 @@ export const ClientHome = () => {
 
   const getAuthor = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/autor/${id}`);
+      const response = await axios.get(`https://charming-happiness-production.up.railway.app/api/autor/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error al obtener el autor", error);
@@ -43,7 +43,7 @@ export const ClientHome = () => {
 
   const getGenre = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/genero/${id}`);
+      const response = await axios.get(`https://charming-happiness-production.up.railway.app/api/genero/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error al obtener el género", error);

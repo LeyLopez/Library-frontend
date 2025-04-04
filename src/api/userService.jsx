@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const urlBase = 'http://localhost:8080/api/usuario';
+const urlBase = 'https://charming-happiness-production.up.railway.app/api/usuario';
 export const userService = {
   
   async getAllUsers(){

@@ -12,7 +12,7 @@ export const RecordsList = ({ type }) => {
   useEffect(() => {
     const getRecords = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/${type}`);
+        const response = await axios.get(`https://charming-happiness-production.up.railway.app/api/${type}`);
         if (response.status >= 200 && response.status < 300) {
           setRecords(response.data);
           setMessage("");
@@ -29,7 +29,7 @@ export const RecordsList = ({ type }) => {
 
   const getBook = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/libro/${id}`);
+      const response = await axios.get(`https://charming-happiness-production.up.railway.app/api/libro/${id}`);
       return response.data;
     } catch (error) {
       console.error("Error al obtener los libros", error);

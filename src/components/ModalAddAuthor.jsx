@@ -24,7 +24,7 @@ export const ModalAddAuthor = ({ isOpen, onClose }) => {
     }
 
     try {
-      await axios.post('http://localhost:8080/api/autor', newAuthor);
+      await axios.post('https://charming-happiness-production.up.railway.app/api/autor', newAuthor);
       setNewAuthor({ name: '', lastName: '', dateOfBirth: '' });
       setAlertMessage('Autor agregado exitosamente.');
       

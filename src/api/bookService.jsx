@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react'
 
-const urlBase = 'http://localhost:8080/api/libro';
+const urlBase = 'https://charming-happiness-production.up.railway.app/api/libro';
 export const bookService = {
   
     async getAllBooks(){

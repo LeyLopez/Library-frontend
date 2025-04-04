@@ -29,7 +29,7 @@ export const ClientHistorial = ({type}) => {
           book: selectedReservation.book,
           status: "CANCELADO"
         };
-        const response = await axios.put(`http://localhost:8080/api/${type}/${selectedReservation.id}`, updatedReserva);
+        const response = await axios.put(`https://charming-happiness-production.up.railway.app/api/${type}/${selectedReservation.id}`, updatedReserva);
         if(response.status === 200) {
           setAlertMessage("Reserva cancelada con éxito.");
           setHistorial((prev) => prev.map(item => item.id === selectedReservation.id ? updatedReserva : item));
@@ -51,7 +51,7 @@ export const ClientHistorial = ({type}) => {
   useEffect(() => {
     const fetchHistorial = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/${type}/user/${user.id}`);
+        const response = await axios.get(`https://charming-happiness-production.up.railway.app/api/${type}/user/${user.id}`);
         setHistorial(response.data);
       } catch (error) {
         console.error("Error al obtener los registros", error);
@@ -66,7 +66,7 @@ export const ClientHistorial = ({type}) => {
       await Promise.all(historial.map(async (item) => {
         if (!booksData[item.book]) {
           try {
-            const response = await axios.get(`http://localhost:8080/api/libro/${item.book}`);
+            const response = await axios.get(`https://charming-happiness-production.up.railway.app/api/libro/${item.book}`);
             booksData[item.book] = response.data;
           } catch (error) {
             console.error("Error al obtener el libro", error);

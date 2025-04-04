@@ -13,7 +13,7 @@ export const UpdateBook = () => {
 
   const getBooks = async () => {
     try{
-      const response = await axios.get("http://localhost:8080/api/libro");
+      const response = await axios.get("https://charming-happiness-production.up.railway.app/api/libro");
       setBooks(response.data);
     }
     catch(error){

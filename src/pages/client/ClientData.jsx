@@ -41,7 +41,7 @@ import { useNavigate } from "react-router-dom";
       setSuccessMessage("");
 
       try {
-        const response = await axios.put(`http://localhost:8080/api/usuario/${user.id}`, formData);
+        const response = await axios.put(`https://charming-happiness-production.up.railway.app/api/usuario/${user.id}`, formData);
         if(response.status >= 200 && response.status < 300) {
           setSuccessMessage("Usuario actualizado con éxito.");
           setFormData({
