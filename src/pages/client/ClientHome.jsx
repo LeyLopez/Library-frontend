@@ -177,7 +177,7 @@ export const ClientHome = () => {
                     <h5 className="card-title">{book.title}</h5>
                     <p className="card-text">{book.description}</p>
                     <p>Autor: {authors[book.author]?.name || "Cargando..."}</p>
-                    <p>Año de publicación: {()=>formatDate(book.dateOfPublication)}</p>
+                    <p>Año de publicación: {formatDate(book.dateOfPublication)}</p>
                     <p>Género: {genres[book.genre]?.name || "Cargando..."}</p>
                   </div>
                 </div>
