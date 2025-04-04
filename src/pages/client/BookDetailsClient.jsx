@@ -23,7 +23,7 @@ export const BookDetails = () => {
         statusChangeDate: today.toISOString().split("T")[0],
         user: user.id,
         book: book.id,
-        status: "ENTREGADO",
+        status: "RESERVADO",
       };
     } else {
       requestData = {
@@ -32,7 +32,7 @@ export const BookDetails = () => {
         statusChangeDate: today.toISOString().split("T")[0],
         user: user.id,
         book: book.id,
-        status: "ENTREGADO",
+        status: "PRESTADO",
       };
     }
 
@@ -50,6 +50,10 @@ export const BookDetails = () => {
     }
   };
 
+  const formatDate = (isoDate) => {
+    return isoDate ? isoDate.split('T')[0] : "";
+  }
+
   return (
     <div className="container">
       <div className="d-flex justify-content-center py-5" style={{ position: "relative", width: "90%", marginBottom: "20%", marginLeft: "10%", top: "150px" }}>
@@ -66,7 +70,7 @@ export const BookDetails = () => {
                     <h5 className="card-title">Título: {book.title}</h5>
                     <p className="card-text">Resumen {book.description}</p>
                     <p>Autor: {author.name}</p>
-                    <p>Año de publicación: {book.dateOfPublication}</p>
+                    <p>Año de publicación: {formatDate(book.dateOfPublication)}</p>
                     <p>Género: {genre.name}</p>
                   </div>
                 </div>
@@ -81,7 +85,6 @@ export const BookDetails = () => {
                 Prestar
               </button>
             </div>
-            
           </div>
         </div>
       </div>

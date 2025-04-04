@@ -89,6 +89,11 @@ export const ClientHistorial = ({type}) => {
     setSelectedReservation(null);
   };
 
+
+  const formatDate = (isoDate) => {
+    return isoDate ? isoDate.split('T')[0] : "";
+  }
+
   return (
     <div
       className="d-flex justify-content-center py-5"
@@ -142,9 +147,9 @@ export const ClientHistorial = ({type}) => {
                   <div className="card-body">
                     <h5 className="card-title">{books[item.book]?.title || "Cargando..."}</h5>
                     <p className="card-text">{books[item.book]?.description || "Cargando..."}</p>
-                    <p>Fecha de {type}: {type==="reserva" ? item.reservationDate: item.loanDate}</p>
+                    <p>Fecha de {type}: {type==="reserva" ? formatDate(item.reservationDate): formatDate(item.loanDate)}</p>
                     <p>
-                      Fecha de vencimiento de {type}: {type==="reserva" ? item.reservationEndDate : item.devolutionDate}
+                      Fecha de vencimiento de {type}: {type==="reserva" ? formatDate(item.reservationEndDate) : formatDate(item.devolutionDate)}
                     </p>
                     <p>Estado: {item.status}</p>
                   </div>

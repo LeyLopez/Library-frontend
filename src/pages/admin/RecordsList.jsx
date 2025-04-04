@@ -54,6 +54,10 @@ export const RecordsList = ({ type }) => {
     }
   }, [records]);
 
+  const formatDate = (isoDate) => {
+    return isoDate ? isoDate.split('T')[0] : "";
+  }
+
   return (
     <>
       <div
@@ -93,8 +97,8 @@ export const RecordsList = ({ type }) => {
                     <div className="card-body">
                       <h5 className="card-title">{books[record.book]?.title || "Cargando..."}</h5>
                       <p className="card-text">Descripción: {books[record.book]?.description || "Cargando..."}</p>
-                      <p>Fecha de {type === "reserva" ? "reserva" : "préstamo"}: {record.reservationDate || record.loanDate || "Cargando..."}</p>
-                      <p>Fecha de vencimiento: {record.reservationEndDate || record.devolutionDate || "Cargando..."}</p>
+                      <p>Fecha de {type === "reserva" ? "reserva" : "préstamo"}: {formatDate(record.reservationDate) || formatDate(record.loanDate) || "Cargando..."}</p>
+                      <p>Fecha de vencimiento: {formatDate(record.reservationEndDate) || formatDate(record.devolutionDate) || "Cargando..."}</p>
                     </div>
                   </div>
                 </div>

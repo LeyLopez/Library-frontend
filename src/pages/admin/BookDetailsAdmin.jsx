@@ -4,6 +4,10 @@ import { BookContext } from '../../contexts/BookProvider';
 
 export const BookDetailsAdmin = () => {
     const {book, author, genre} = useContext(BookContext);
+
+    const formatDate = (isoDate) => {
+      return isoDate ? isoDate.split('T')[0] : "";
+    }
     
       return (
         <div className="container">
@@ -41,7 +45,7 @@ export const BookDetailsAdmin = () => {
                         Resumen  {book.description}
                       </p>
                       <p>Autor: {author.name}</p>
-                      <p>Año de publicación: {book.dateOfPublication}</p>
+                      <p>Año de publicación: {formatDate(book.dateOfPublication)}</p>
                       <p>Género: {genre.name}</p>
                       <p>Disponibilidad: {book.quantity}</p>
                     </div>
